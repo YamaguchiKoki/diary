@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { FC } from "react";
+import { RichText } from "@/app/feature/post/components/RichText";
 import type { Block } from "@/lib/content/types";
-import { RichText } from "./RichText";
 
 type Props = {
   block: Block;

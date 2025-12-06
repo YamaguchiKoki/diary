@@ -13,10 +13,13 @@
   },
   "dependencies": {
     "@notionhq/client": "^5.4.0",
+    "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@t3-oss/env-nextjs": "^0.13.8",
+    "@tabler/icons-react": "^3.35.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.23.25",
     "lucide-react": "^0.555.0",
     "motion": "^12.23.25",
     "next": "16.0.7",

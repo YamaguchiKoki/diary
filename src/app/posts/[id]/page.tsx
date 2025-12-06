@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BlockRenderer } from "@/components/custom/blocks/BlockRenderer";
+import { BlockRenderer } from "@/app/feature/post/components/BlockRenderer";
 import { getPost, getPosts } from "@/lib/content/notion/api";
 
 type Props = {
@@ -10,28 +9,6 @@ type Props = {
 export async function generateStaticParams() {
   const posts = await getPosts();
   return posts.map((post) => ({ id: post.id }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const post = await getPost(id);
-
-  if (!post) {
-    return { title: "Not Found" };
-  }
-
-  return {
-    title: post.title,
-    openGraph: {
-      title: post.title,
-      images: [`/api/og?title=${encodeURIComponent(post.title)}`],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      images: [`/api/og?title=${encodeURIComponent(post.title)}`],
-    },
-  };
 }
 
 export default async function PostPage({ params }: Props) {

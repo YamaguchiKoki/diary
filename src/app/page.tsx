@@ -1,42 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
+import { PostCard } from "@/app/feature/post/components/PostCard";
+import { BentoGrid } from "@/components/layouts/BentoGrid";
 import { getPosts } from "@/lib/content/notion/api";
 
 export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <main className="max-w-2xl mx-auto py-12 px-4">
+    <main className="max-w-4xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold mb-8">Blog</h1>
-      <ul className="space-y-6">
+      <BentoGrid>
         {posts.map((post) => (
-          <li key={post.id}>
-            <Link
-              href={`/posts/${post.id}`}
-              className="block hover:bg-gray-50 rounded-lg transition overflow-hidden border"
-            >
-              {post.thumbnail && (
-                <div className="relative w-full h-48">
-                  <Image
-                    src={post.thumbnail}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              )}
-              <div className="p-4">
-                <h2 className="text-xl font-semibold">{post.title}</h2>
-                {post.publishedAt && (
-                  <time className="text-sm text-gray-500">
-                    {post.publishedAt}
-                  </time>
-                )}
-              </div>
-            </Link>
-          </li>
+          <PostCard key={post.id} post={post} />
         ))}
-      </ul>
+      </BentoGrid>
     </main>
   );
 }
