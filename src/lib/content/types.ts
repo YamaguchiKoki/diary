@@ -22,5 +22,6 @@ export type Post = {
   title: string;
   published: boolean;
   publishedAt: string | null;
+  thumbnail: string | null;
   blocks: Block[];
 };

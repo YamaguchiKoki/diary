@@ -15,13 +15,16 @@ export default async function Home() {
               href={`/posts/${post.id}`}
               className="block hover:bg-gray-50 rounded-lg transition overflow-hidden border"
             >
-              <Image
-                src={`/api/og?title=${encodeURIComponent(post.title)}`}
-                alt={post.title}
-                width={1200}
-                height={630}
-                className="w-full h-auto"
-              />
+              {post.thumbnail && (
+                <div className="relative w-full h-48">
+                  <Image
+                    src={post.thumbnail}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
               <div className="p-4">
                 <h2 className="text-xl font-semibold">{post.title}</h2>
                 {post.publishedAt && (
