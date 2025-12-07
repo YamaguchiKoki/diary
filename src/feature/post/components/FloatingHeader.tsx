@@ -18,7 +18,7 @@ const MobileDrawer = dynamic(() =>
   import("@/components/ui/MobileDrawer").then((mod) => mod.MobileDrawer),
 );
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { MOBILE_SCROLL_THRESHOLD, SCROLL_AREA_ID } from "@/lib/constants";
 
 type FloatingHeaderProps = {
