@@ -3,7 +3,6 @@ import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
 
 import { Sawarabi_Mincho } from "next/font/google";
-import localFont from "next/font/local";
 import { MenuContent } from "@/components/ui/MenuItem";
 import { SideMenu } from "@/components/ui/SideMenu";
 
