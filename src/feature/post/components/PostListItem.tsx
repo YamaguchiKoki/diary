@@ -1,5 +1,6 @@
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { FC } from "react";
 import type { PostForListView } from "@/feature/post/type";
 import { routes } from "@/lib/routes";
@@ -7,7 +8,6 @@ import { cn } from "@/lib/utils";
 
 type PostListItemProps = {
   isMobile?: boolean;
-  isActive: boolean;
   year: string;
   post: PostForListView;
 };
@@ -15,9 +15,10 @@ type PostListItemProps = {
 export const PostListItem: FC<PostListItemProps> = ({
   post,
   isMobile,
-  isActive,
   year,
 }) => {
+  const pathname = usePathname();
+  const isActive = pathname === routes.posts.detail(Number(year), post.id);
   return (
     <LazyMotion features={domAnimation}>
       <Link

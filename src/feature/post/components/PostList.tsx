@@ -13,23 +13,18 @@ type PostListProps = {
 };
 
 export const PostList: FC<PostListProps> = ({ posts, isMobile, year }) => {
-  const pathname = usePathname();
-
   const memoizedPosts = useMemo(() => {
     return posts.map((post) => {
-      const isActive = pathname === `/posts/${year}/${post.id}`;
-
       return (
         <PostListItem
           key={post.id}
           year={year}
           post={post}
           isMobile={isMobile}
-          isActive={isActive}
         />
       );
     });
-  }, [posts, pathname, isMobile, year]);
+  }, [posts, isMobile, year]);
 
   return (
     <div className={cn(!isMobile && "flex flex-col gap-1 text-sm")}>

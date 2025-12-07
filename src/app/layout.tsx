@@ -5,8 +5,8 @@ import { MenuContent } from "@/components/ui/MenuItem";
 import { SideMenu } from "@/components/ui/SideMenu";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "My blog",
+  title: "Sanbun",
+  description: "散文投稿します",
 };
 
 export default function RootLayout({
