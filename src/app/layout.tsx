@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
 import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
+
+import { Sawarabi_Mincho } from "next/font/google";
+import localFont from "next/font/local";
 import { MenuContent } from "@/components/ui/MenuItem";
 import { SideMenu } from "@/components/ui/SideMenu";
+
+const sawarabiMincho = Sawarabi_Mincho({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sawarabi",
+});
 
 export const metadata: Metadata = {
   title: "Sanbun",
@@ -15,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={sawarabiMincho.className}>
       <body className="relative min-h-screen bg-white">
         <div
           className="fixed inset-0 -z-20"

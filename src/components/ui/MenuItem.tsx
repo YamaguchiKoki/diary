@@ -16,17 +16,11 @@ export const MenuContent = () => {
           href={routes.home()}
           className="link-card inline-flex items-center gap-2 p-2"
         >
-          <Image
-            src="/assets/me.png"
-            alt="Precious Love"
-            width={40}
-            height={40}
-            loading="lazy"
-            className="rounded-full border shadow-xs"
-          />
           <div className="flex flex-col">
-            <span className="font-semibold tracking-tight">Precious Love</span>
-            <span className="text-gray-600">Software Engineer</span>
+            <span className="font-semibold tracking-tight">
+              preciouslove.com
+            </span>
+            <span className="text-gray-600">preciousloveの個人サイト</span>
           </div>
         </Link>
         <div className="flex flex-col gap-1">
