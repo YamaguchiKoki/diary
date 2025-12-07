@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { LightRays } from "@/components/ui/light-rays";
+import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
+import { MenuContent } from "@/components/ui/MenuItem";
+import { SideMenu } from "@/components/ui/SideMenu";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -15,7 +17,6 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="relative min-h-screen bg-white">
-        {/* グリッド背景 */}
         <div
           className="fixed inset-0 -z-20"
           style={{
@@ -26,8 +27,6 @@ export default function RootLayout({
             backgroundSize: "16px 16px",
           }}
         />
-
-        {/* LightRays */}
         <LightRays
           className="fixed inset-0 -z-10"
           count={7}
@@ -36,9 +35,12 @@ export default function RootLayout({
           speed={14}
           length="70vh"
         />
-
-        {/* コンテンツ */}
-        {children}
+        <div className="lg:flex">
+          <SideMenu>
+            <MenuContent />
+          </SideMenu>
+          <div className="flex flex-1">{children}</div>
+        </div>
       </body>
     </html>
   );

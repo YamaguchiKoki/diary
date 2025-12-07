@@ -7,50 +7,6 @@ import type { Post } from "../types";
 import { dataSourceId, notion } from "./client";
 import { parseBlock } from "./parser";
 
-function isFullBlock(
-  block: BlockObjectResponse | PartialBlockObjectResponse,
-): block is BlockObjectResponse {
-  return "type" in block;
-}
-
-function extractTitle(page: PageObjectResponse): string {
-  const titleProp = page.properties.title;
-  if (titleProp.type === "title") {
-    return titleProp.title[0]?.plain_text ?? "Untitled";
-  }
-  return "Untitled";
-}
-
-function extractPublished(page: PageObjectResponse): boolean {
-  const prop = page.properties.published;
-  if (prop.type === "checkbox") {
-    return prop.checkbox;
-  }
-  return false;
-}
-
-function extractPublishedAt(page: PageObjectResponse): string | null {
-  const prop = page.properties.published_at;
-  if (prop.type === "date") {
-    return prop.date?.start ?? null;
-  }
-  return null;
-}
-
-function extractThumbnail(page: PageObjectResponse): string | null {
-  const prop = page.properties.thumbnail;
-  if (prop.type === "files" && prop.files.length > 0) {
-    const file = prop.files[0];
-    if (file.type === "external") {
-      return file.external.url;
-    }
-    if (file.type === "file") {
-      return file.file.url;
-    }
-  }
-  return null;
-}
-
 export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
@@ -105,4 +61,103 @@ export async function getPost(id: string): Promise<Post | null> {
   } catch {
     return null;
   }
+}
+
+export async function getPostsByYear(
+  year: number,
+): Promise<Omit<Post, "blocks">[]> {
+  const response = await notion.dataSources.query({
+    data_source_id: dataSourceId,
+    filter: {
+      and: [
+        {
+          property: "published",
+          checkbox: {
+            equals: true,
+          },
+        },
+        {
+          property: "published_at",
+          date: {
+            on_or_after: `${year}-01-01`,
+          },
+        },
+        {
+          property: "published_at",
+          date: {
+            before: `${year + 1}-01-01`,
+          },
+        },
+      ],
+    },
+    sorts: [
+      {
+        property: "published_at",
+        direction: "descending",
+      },
+    ],
+  });
+
+  return response.results
+    .filter((page): page is PageObjectResponse => page.object === "page")
+    .map((page) => ({
+      id: page.id,
+      title: extractTitle(page),
+      published: extractPublished(page),
+      publishedAt: extractPublishedAt(page),
+      thumbnail: extractThumbnail(page),
+    }));
+}
+
+function isFullBlock(
+  block: BlockObjectResponse | PartialBlockObjectResponse,
+): block is BlockObjectResponse {
+  return "type" in block;
+}
+
+function extractTitle(page: PageObjectResponse): string {
+  const titleProp = page.properties.title;
+  if (titleProp.type === "title") {
+    return titleProp.title[0]?.plain_text ?? "Untitled";
+  }
+  return "Untitled";
+}
+
+function extractPublished(page: PageObjectResponse): boolean {
+  const prop = page.properties.published;
+  if (prop.type === "checkbox") {
+    return prop.checkbox;
+  }
+  return false;
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+function extractPublishedAt(page: PageObjectResponse): string | null {
+  const prop = page.properties.published_at;
+  if (prop.type === "date" && prop.date?.start) {
+    return formatDate(prop.date.start);
+  }
+  return null;
+}
+
+function extractThumbnail(page: PageObjectResponse): string | null {
+  const prop = page.properties.thumbnail;
+  if (prop.type === "files" && prop.files.length > 0) {
+    const file = prop.files[0];
+    if (file.type === "external") {
+      return file.external.url;
+    }
+    if (file.type === "file") {
+      return file.file.url;
+    }
+  }
+  return null;
 }
