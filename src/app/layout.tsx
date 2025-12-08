@@ -24,7 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={sawarabiMincho.className}>
+    <html
+      lang="ja"
+      className={sawarabiMincho.className}
+      suppressHydrationWarning
+    >
       <body className="relative min-h-screen bg-white">
         <div
           className="fixed inset-0 -z-20"

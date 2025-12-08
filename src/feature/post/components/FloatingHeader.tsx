@@ -20,16 +20,18 @@ const MobileDrawer = dynamic(() =>
 
 import { Button } from "@/components/ui/button";
 import { MOBILE_SCROLL_THRESHOLD, SCROLL_AREA_ID } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 type FloatingHeaderProps = {
   title?: string;
-  scrollTitle: string;
-  goBackLink: string;
+  scrollTitle?: string;
+  goBackLink?: string;
   children?: ReactNode;
+  className?: string;
 };
 
 export const FloatingHeader: FC<FloatingHeaderProps> = memo(
-  ({ scrollTitle, title, goBackLink, children }) => {
+  ({ scrollTitle, title, goBackLink, children, className }) => {
     const [transformValues, setTransformValues] = useState({
       translateY: 0,
       opacity: scrollTitle ? 0 : 1,
@@ -87,7 +89,22 @@ export const FloatingHeader: FC<FloatingHeaderProps> = memo(
     );
 
     return (
-      <header className="sticky inset-x-0 top-0 z-10 mx-auto flex h-12 w-full shrink-0 items-center overflow-hidden border-b bg-white text-sm font-medium lg:hidden">
+      <header
+        className={cn(
+          "sticky inset-x-0 top-0 z-10 mx-auto flex h-12 w-full shrink-0 items-center overflow-hidden text-sm font-medium lg:hidden",
+          "backdrop-blur-xl bg-white/10",
+          className,
+        )}
+        style={{
+          // borderRadius: "0 0 16px 16px",
+          boxShadow: `
+            inset 2px 2px 2px 0 rgba(255, 255, 255, 0.35),
+            inset -2px -2px 2px 0 rgba(255, 255, 255, 0.35),
+            0 4px 4px rgba(0, 0, 0, 0.15),
+            0 0 24px rgba(255, 255, 255, 0.1)
+          `,
+        }}
+      >
         <div className="flex size-full items-center px-3">
           <div className="flex w-full items-center justify-between gap-2">
             <div className="flex flex-1 items-center gap-1">

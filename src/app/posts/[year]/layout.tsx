@@ -15,7 +15,7 @@ export default async function YearLayout({ children, params }: Props) {
 
   return (
     <>
-      <SideMenu title={`${year}年`}>
+      <SideMenu title={`${year}年`} isInner>
         <Suspense fallback={<div>Loading...</div>}>
           <PostList posts={posts} year={year} />
         </Suspense>

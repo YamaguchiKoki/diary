@@ -24,15 +24,12 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <ScrollArea
-      className="bg-white h-screen overflow-y-auto py-20 px-16"
-      useScrollAreaId
-    >
+    <ScrollArea className="bg-white h-screen overflow-y-auto" useScrollAreaId>
       <FloatingHeader
         scrollTitle={post.title}
         goBackLink={routes.posts.year(Number(year))}
       />
-      <div className="content-wrapper @container/writing">
+      <div className="content-wrapper @container/writing px-4 lg:py-20 lg:px-16">
         <article className="content">
           <PageTitle
             title={post.title}

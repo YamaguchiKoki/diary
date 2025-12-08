@@ -1,9 +1,14 @@
+import { ScrollArea } from "@/components/layouts/ScrollArea";
 import { Highlighter } from "@/components/ui/highlighter";
+import { Spacer } from "@/components/ui/Spacer";
+import { FloatingHeader } from "@/feature/post/components/FloatingHeader";
 import { PageTitle } from "@/feature/post/components/PageTitle";
 
 export default async function Home() {
   return (
-    <main className="max-w-4xl py-20 px-16">
+    <ScrollArea useScrollAreaId className="lg:px-8">
+      <FloatingHeader title="このサイトについて" className="" />
+      <Spacer />
       <PageTitle title="このサイトについて" subtitle />
       <div className="flex flex-col gap-y-4">
         <section>
@@ -15,6 +20,12 @@ export default async function Home() {
           <ul className="space-y-2">
             <li>
               <p>日記を投稿します(毎日投稿とは限らない)。</p>
+            </li>
+            <li>
+              <p>日々の経験に反応して書きます。</p>
+            </li>
+            <li>
+              <p>日付で区切った自身の経験について書きます。</p>
             </li>
             <li>
               <p>Notion APIの仕様が許す限りデコります。</p>
@@ -43,6 +54,6 @@ export default async function Home() {
           </ul>
         </section>
       </div>
-    </main>
+    </ScrollArea>
   );
 }

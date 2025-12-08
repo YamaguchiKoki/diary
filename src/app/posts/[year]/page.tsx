@@ -1,3 +1,6 @@
+import { Suspense } from "react";
+import { ScrollArea } from "@/components/layouts/ScrollArea";
+import { FloatingHeader } from "@/feature/post/components/FloatingHeader";
 import { PostList } from "@/feature/post/components/PostList";
 import { getPostsByYear } from "@/lib/content/notion/api";
 import type { PostYearParams } from "@/lib/routes";
@@ -11,8 +14,11 @@ export default async function YearPage({ params }: Props) {
   const posts = await getPostsByYear(Number(year));
 
   return (
-    <div className="lg:hidden">
-      <PostList posts={posts} year={year} isMobile />
-    </div>
+    <ScrollArea className="lg:hidden">
+      <FloatingHeader title={`${year}年の日記`} />
+      <Suspense fallback={<p>loading</p>}>
+        <PostList posts={posts} year={year} isMobile />
+      </Suspense>
+    </ScrollArea>
   );
 }
