@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
@@ -54,6 +55,7 @@ export default function RootLayout({
           </SideMenu>
           <div className="flex flex-1">{children}</div>
         </div>
+        <SpeedInsights />
       </body>
     </html>
   );
