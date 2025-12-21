@@ -1,6 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
 
 import { Sawarabi_Mincho } from "next/font/google";
