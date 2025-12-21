@@ -1,5 +1,5 @@
 import { CommandIcon } from "lucide-react";
-
+import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -25,7 +25,9 @@ export function MobileDrawer() {
           <DrawerDescription>Mobile Menu</DrawerDescription>
         </DrawerHeader>
         <div className="overflow-y-auto p-4">
-          <MenuContent />
+          <Suspense>
+            <MenuContent />
+          </Suspense>
         </div>
       </DrawerContent>
     </Drawer>

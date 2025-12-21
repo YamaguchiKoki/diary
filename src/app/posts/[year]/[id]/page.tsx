@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ScrollArea } from "@/components/layouts/ScrollArea";
 import { BlockRenderer } from "@/feature/post/components/BlockRenderer";
 import { FloatingHeader } from "@/feature/post/components/FloatingHeader";
@@ -12,10 +13,22 @@ type Props = {
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return posts.map((post) => ({ id: post.id }));
+
+  return posts.map((post) => ({
+    year: post.publishedAt?.slice(-4) ?? "2025",
+    id: post.id,
+  }));
 }
 
 export default async function PostPage({ params }: Props) {
+  return (
+    <Suspense fallback={<p>loading</p>}>
+      <PostPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function PostPageContent({ params }: Props) {
   const { year, id } = await params;
   const post = await getPost(id);
 

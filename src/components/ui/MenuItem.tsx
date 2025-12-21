@@ -1,13 +1,13 @@
 import { CalendarIcon, SparklesIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { NavigationLink } from "@/components/ui/NavigationLink";
 import { PROFILES } from "@/lib/constants";
 import { routes } from "@/lib/routes";
-import { getYearRange } from "@/lib/utils";
+import { getCachedYearRange } from "@/lib/year-range.server";
 
-export const MenuContent = () => {
-  const years = getYearRange();
+// usePathnameを使っているため部分的に動的になる。そのため使う際はsuspenseで囲む
+export const MenuContent = async () => {
+  const years = await getCachedYearRange();
 
   return (
     <div className="flex w-full flex-col text-sm">

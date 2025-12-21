@@ -10,17 +10,23 @@ type Props = {
 };
 
 export default async function YearLayout({ children, params }: Props) {
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <YearSideMenu params={params} />
+      </Suspense>
+      <div className="flex-1 lg:bg-dots">{children}</div>
+    </>
+  );
+}
+
+async function YearSideMenu({ params }: { params: Promise<{ year: string }> }) {
   const { year } = await params;
   const posts = await getPostsByYear(Number(year));
 
   return (
-    <>
-      <SideMenu title={`${year}年`} isInner>
-        <Suspense fallback={<div>Loading...</div>}>
-          <PostList posts={posts} year={year} />
-        </Suspense>
-      </SideMenu>
-      <div className="flex-1 lg:bg-dots">{children}</div>
-    </>
+    <SideMenu title={`${year}年`} isInner>
+      <PostList posts={posts} year={year} />
+    </SideMenu>
   );
 }

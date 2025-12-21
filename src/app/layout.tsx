@@ -4,6 +4,7 @@ import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
 
 import { Sawarabi_Mincho } from "next/font/google";
+import { Suspense } from "react";
 import { MenuContent } from "@/components/ui/MenuItem";
 import { SideMenu } from "@/components/ui/SideMenu";
 
@@ -41,17 +42,11 @@ export default function RootLayout({
             backgroundSize: "16px 16px",
           }}
         />
-        <LightRays
-          className="fixed inset-0 -z-10"
-          count={7}
-          color="rgba(30, 64, 175, 0.3)"
-          blur={36}
-          speed={14}
-          length="70vh"
-        />
         <div className="lg:flex">
           <SideMenu>
-            <MenuContent />
+            <Suspense>
+              <MenuContent />
+            </Suspense>
           </SideMenu>
           <div className="flex flex-1">{children}</div>
         </div>

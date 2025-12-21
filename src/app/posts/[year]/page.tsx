@@ -10,15 +10,23 @@ type Props = {
 };
 
 export default async function YearPage({ params }: Props) {
+  return (
+    <Suspense fallback={<p>loading</p>}>
+      <YearPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function YearPageContent({ params }: Props) {
+  "use cache";
+
   const { year } = await params;
   const posts = await getPostsByYear(Number(year));
 
   return (
     <ScrollArea className="lg:hidden">
       <FloatingHeader title={`${year}年の日記`} />
-      <Suspense fallback={<p>loading</p>}>
-        <PostList posts={posts} year={year} isMobile />
-      </Suspense>
+      <PostList posts={posts} year={year} isMobile />
     </ScrollArea>
   );
 }
