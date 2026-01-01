@@ -1,6 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { LightRays } from "@/components/ui/LightRays";
 import "./globals.css";
 
 import { Sawarabi_Mincho } from "next/font/google";
@@ -40,14 +39,6 @@ export default function RootLayout({
             `,
             backgroundSize: "16px 16px",
           }}
-        />
-        <LightRays
-          className="fixed inset-0 -z-10"
-          count={7}
-          color="rgba(30, 64, 175, 0.3)"
-          blur={36}
-          speed={14}
-          length="70vh"
         />
         <div className="lg:flex">
           <SideMenu>
