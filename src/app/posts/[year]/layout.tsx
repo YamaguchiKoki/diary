@@ -3,11 +3,17 @@ import { type ReactNode, Suspense } from "react";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { PostList } from "@/feature/post/components/PostList";
 import { getPostsByYear } from "@/lib/content/notion/api";
+import { getYearRange } from "@/lib/utils";
 
 type Props = {
   children: ReactNode;
   params: Promise<{ year: string }>;
 };
+
+export async function generateStaticParams() {
+  const years = getYearRange();
+  return years.map((year) => ({ year: String(year) }));
+}
 
 export default async function YearLayout({ children, params }: Props) {
   const { year } = await params;

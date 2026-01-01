@@ -3,6 +3,7 @@ import type {
   PageObjectResponse,
   PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
+import { cacheLife, cacheTag } from "next/cache";
 import type { Post } from "../types";
 import { dataSourceId, notion } from "./client";
 import { parseBlock } from "./parser";
@@ -36,6 +37,9 @@ export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
 }
 
 export async function getPost(id: string): Promise<Post | null> {
+  "use cache";
+  cacheLife("days");
+  cacheTag(`posts-${id}`);
   try {
     const page = await notion.pages.retrieve({ page_id: id });
 
@@ -66,6 +70,9 @@ export async function getPost(id: string): Promise<Post | null> {
 export async function getPostsByYear(
   year: number,
 ): Promise<Omit<Post, "blocks">[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag(`posts-${year}`);
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
     filter: {

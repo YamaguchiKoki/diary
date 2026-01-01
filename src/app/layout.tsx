@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Sawarabi_Mincho } from "next/font/google";
-import { MenuContent } from "@/components/ui/MenuItem";
+import { Suspense } from "react";
+import { MenuContent, MenuSkeleton } from "@/components/ui/MenuItem";
 import { SideMenu } from "@/components/ui/SideMenu";
 
 const sawarabiMincho = Sawarabi_Mincho({
@@ -42,7 +43,9 @@ export default function RootLayout({
         />
         <div className="lg:flex">
           <SideMenu>
-            <MenuContent />
+            <Suspense fallback={<MenuSkeleton />}>
+              <MenuContent />
+            </Suspense>
           </SideMenu>
           <div className="flex flex-1">{children}</div>
         </div>

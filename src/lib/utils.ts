@@ -6,13 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 const START_YEAR = 2025;
+const CURRENT_YEAR = 2026;
 export const getYearRange = (): number[] => {
-  const currentYear = new Date().getFullYear();
   const years: number[] = [];
-
-  for (let year = currentYear; year >= START_YEAR; year--) {
+  for (let year = CURRENT_YEAR; year >= START_YEAR; year--) {
     years.push(year);
   }
-
   return years;
 };

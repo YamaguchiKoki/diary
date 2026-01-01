@@ -1,5 +1,4 @@
 import { CalendarIcon, SparklesIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { NavigationLink } from "@/components/ui/NavigationLink";
 import { PROFILES } from "@/lib/constants";
@@ -77,3 +76,15 @@ const LINKS = [
     icon: <SparklesIcon size={16} />,
   },
 ];
+
+export const MenuSkeleton = () => {
+  return (
+    <div className="flex w-full flex-col text-sm gap-4 p-2">
+      <div className="h-12 bg-gray-100 rounded-lg animate-pulse" />
+      <div className="h-8 bg-gray-100 rounded-lg animate-pulse" />
+      <hr />
+      <div className="h-8 bg-gray-100 rounded-lg animate-pulse" />
+      <div className="h-8 bg-gray-100 rounded-lg animate-pulse" />
+    </div>
+  );
+};

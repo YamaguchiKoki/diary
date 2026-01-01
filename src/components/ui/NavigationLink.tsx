@@ -36,12 +36,7 @@ export const NavigationLink: FC<NavigationLinkProps> = memo(
       );
     }
 
-    let isActive = false;
-    if (pathname?.length > 0) {
-      const splittedPathname = pathname.split("/");
-      const currentPathname = splittedPathname[1] ?? "";
-      isActive = currentPathname === href.split("/")[1];
-    }
+    const isActive = pathname === href || pathname.startsWith(href + "/");
 
     return (
       <Link
@@ -51,6 +46,7 @@ export const NavigationLink: FC<NavigationLinkProps> = memo(
           "group flex items-center justify-between rounded-lg p-2",
           isActive ? "bg-primary text-white" : "hover:bg-gray-200",
         )}
+        suppressHydrationWarning
       >
         <span className="flex items-center gap-2">
           {iconCmp}

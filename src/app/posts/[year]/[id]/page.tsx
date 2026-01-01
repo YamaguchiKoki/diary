@@ -3,16 +3,28 @@ import { ScrollArea } from "@/components/layouts/ScrollArea";
 import { BlockRenderer } from "@/feature/post/components/BlockRenderer";
 import { FloatingHeader } from "@/feature/post/components/FloatingHeader";
 import { PageTitle } from "@/feature/post/components/PageTitle";
-import { getPost, getPosts } from "@/lib/content/notion/api";
+import { getPost, getPostsByYear } from "@/lib/content/notion/api";
 import { type PostDetailParams, routes } from "@/lib/routes";
+import { getYearRange } from "@/lib/utils";
 
 type Props = {
   params: Promise<PostDetailParams>;
 };
 
 export async function generateStaticParams() {
-  const posts = await getPosts();
-  return posts.map((post) => ({ id: post.id }));
+  const years = getYearRange();
+
+  const allParams = await Promise.all(
+    years.map(async (year) => {
+      const posts = await getPostsByYear(year);
+      return posts.map((post) => ({
+        year: String(year),
+        id: post.id,
+      }));
+    }),
+  );
+
+  return allParams.flat();
 }
 
 export default async function PostPage({ params }: Props) {
