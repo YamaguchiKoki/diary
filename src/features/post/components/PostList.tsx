@@ -1,8 +1,8 @@
 "use client";
 
 import { type FC, useMemo } from "react";
-import { PostListItem } from "@/feature/post/components/PostListItem";
-import type { PostForListView } from "@/feature/post/type";
+import { PostListItem } from "@/features/post/components/PostListItem";
+import type { PostForListView } from "@/features/post/type";
 import { cn } from "@/lib/utils";
 
 type PostListProps = {

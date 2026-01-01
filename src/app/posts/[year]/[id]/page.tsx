@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { ScrollArea } from "@/components/layouts/ScrollArea";
-import { BlockRenderer } from "@/feature/post/components/BlockRenderer";
-import { FloatingHeader } from "@/feature/post/components/FloatingHeader";
-import { PageTitle } from "@/feature/post/components/PageTitle";
+import { BlockRenderer } from "@/features/post/components/BlockRenderer";
+import { FloatingHeader } from "@/features/post/components/FloatingHeader";
+import { PageTitle } from "@/features/post/components/PageTitle";
 import { getPost, getPostsByYear } from "@/lib/content/notion/api";
 import { type PostDetailParams, routes } from "@/lib/routes";
 import { getYearRange } from "@/lib/utils";

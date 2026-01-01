@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ScrollArea } from "@/components/layouts/ScrollArea";
-import { FloatingHeader } from "@/feature/post/components/FloatingHeader";
-import { PostList } from "@/feature/post/components/PostList";
+import { FloatingHeader } from "@/features/post/components/FloatingHeader";
+import { PostList } from "@/features/post/components/PostList";
 import { getPostsByYear } from "@/lib/content/notion/api";
 import type { PostYearParams } from "@/lib/routes";
 

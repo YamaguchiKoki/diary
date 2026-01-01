@@ -1,7 +1,7 @@
 import { type ReactNode, Suspense } from "react";
 
 import { SideMenu } from "@/components/ui/SideMenu";
-import { PostList } from "@/feature/post/components/PostList";
+import { PostList } from "@/features/post/components/PostList";
 import { getPostsByYear } from "@/lib/content/notion/api";
 import { getYearRange } from "@/lib/utils";
 

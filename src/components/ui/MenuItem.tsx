@@ -1,4 +1,4 @@
-import { CalendarIcon, SparklesIcon } from "lucide-react";
+import { CalendarIcon, LibraryBig, SparklesIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { NavigationLink } from "@/components/ui/NavigationLink";
@@ -27,7 +27,7 @@ export const MenuContent = () => {
 
       {sections.map((section) => (
         <div key={section.id}>
-          <hr />
+          {/* <hr /> */}
           <NavSection title={section.title} items={section.items} />
         </div>
       ))}
@@ -36,7 +36,7 @@ export const MenuContent = () => {
 };
 
 const NavSection = ({ title, items }: Omit<NavSection, "id">) => (
-  <div className="flex flex-col gap-2 text-sm">
+  <div className="flex flex-col gap-2 text-sm pt-2">
     {title && (
       <span className="px-2 text-xs leading-relaxed font-medium text-gray-600">
         {title}
@@ -78,6 +78,16 @@ const getNavSections = (): NavSection[] => {
           href: routes.home(),
           label: "Home",
           icon: <SparklesIcon size={16} />,
+        },
+      ],
+    },
+    {
+      id: "reading",
+      items: [
+        {
+          href: routes.books(),
+          label: "Reading",
+          icon: <LibraryBig size={16} />,
         },
       ],
     },
