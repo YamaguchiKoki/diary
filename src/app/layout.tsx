@@ -30,7 +30,7 @@ export default function RootLayout({
       className={sawarabiMincho.className}
       suppressHydrationWarning
     >
-      <body className="relative min-h-screen bg-white">
+      <body className="relative min-h-screen bg-white" suppressHydrationWarning>
         <div
           className="fixed inset-0 -z-20"
           style={{
