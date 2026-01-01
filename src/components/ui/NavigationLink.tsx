@@ -36,7 +36,7 @@ export const NavigationLink: FC<NavigationLinkProps> = memo(
       );
     }
 
-    const isActive = pathname === href || pathname.startsWith(href + "/");
+    const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
     return (
       <Link
