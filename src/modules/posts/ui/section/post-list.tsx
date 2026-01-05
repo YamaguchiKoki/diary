@@ -1,4 +1,5 @@
 import { type FC, Suspense } from "react";
+import { ErrorBoundary } from "@/components/layouts/ErrorBoundary";
 import { getPostsByYear } from "@/modules/notion/service/api";
 import {
   PostListView,
@@ -9,11 +10,13 @@ type PostListSectionProps = {
   year: string;
   isMobile?: boolean;
 };
-export const PostListSection: FC<PostListSectionProps> = async ({ year }) => {
-  const posts = await getPostsByYear(Number(year));
+export const PostListSection: FC<PostListSectionProps> = ({ year }) => {
+  const postsPromise = getPostsByYear(Number(year));
   return (
-    <Suspense fallback={<PostListViewSkelton />}>
-      <PostListView posts={posts} year={year} />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<PostListViewSkelton />}>
+        <PostListView postsPromise={postsPromise} year={year} />
+      </Suspense>
+    </ErrorBoundary>
   );
 };

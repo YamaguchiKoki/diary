@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { type FC, Suspense } from "react";
+import { ErrorBoundary } from "@/components/layouts/ErrorBoundary";
 import { getPost } from "@/modules/notion/service/api";
 import {
   PostDetailView,
@@ -10,15 +10,14 @@ type PostDetailProps = {
   postId: string;
 };
 
-export const PostDetailSection: FC<PostDetailProps> = async ({ postId }) => {
-  const post = await getPost(postId);
+export const PostDetailSection: FC<PostDetailProps> = ({ postId }) => {
+  const postPromise = getPost(postId);
 
-  if (!post) {
-    notFound();
-  }
   return (
-    <Suspense fallback={<PostDetailViewSkelton />}>
-      <PostDetailView post={post} />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<PostDetailViewSkelton />}>
+        <PostDetailView postPromise={postPromise} />
+      </Suspense>
+    </ErrorBoundary>
   );
 };
