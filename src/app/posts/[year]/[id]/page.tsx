@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
 import { ScrollArea } from "@/components/layouts/ScrollArea";
-import { BlockRenderer } from "@/features/post/components/BlockRenderer";
-import { FloatingHeader } from "@/features/post/components/FloatingHeader";
-import { PageTitle } from "@/features/post/components/PageTitle";
-import { getPost, getPostsByYear } from "@/lib/content/notion/api";
+import { FloatingHeader } from "@/components/ui/FloatingHeader";
 import { type PostDetailParams, routes } from "@/lib/routes";
 import { getYearRange } from "@/lib/utils";
+import { getPost, getPostsByYear } from "@/modules/notion/service/api";
+import { PostDetailSection } from "@/modules/posts/ui/section/post-detail";
 
 type Props = {
   params: Promise<PostDetailParams>;
@@ -41,20 +40,7 @@ export default async function PostPage({ params }: Props) {
         scrollTitle={post.title}
         goBackLink={routes.posts.year(Number(year))}
       />
-      <div className="content-wrapper @container/writing px-4 lg:py-20 lg:px-16">
-        <article className="content">
-          <PageTitle
-            title={post.title}
-            subtitle={<time className="text-gray-400">{post.publishedAt}</time>}
-            className="mb-6 flex flex-col gap-3"
-          />
-          <div>
-            {post.blocks.map((block, i) => (
-              <BlockRenderer key={`${block.type}-${i}`} block={block} />
-            ))}
-          </div>
-        </article>
-      </div>
+      <PostDetailSection postId={id} />
     </ScrollArea>
   );
 }

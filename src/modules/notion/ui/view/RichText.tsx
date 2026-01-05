@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import type { RichText as RichTextType } from "@/lib/content/types";
+import type { RichText as RichTextType } from "@/modules/notion/types";
 
 type Props = {
   texts: RichTextType[];

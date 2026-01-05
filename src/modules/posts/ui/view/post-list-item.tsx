@@ -2,9 +2,10 @@ import { domAnimation, LazyMotion, m } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { FC } from "react";
-import type { PostForListView } from "@/features/post/type";
+
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
+import type { PostForListView } from "@/modules/posts/types";
 
 type PostListItemProps = {
   isMobile?: boolean;

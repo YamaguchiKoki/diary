@@ -1,9 +1,8 @@
-import { type ReactNode, Suspense } from "react";
+import type { ReactNode } from "react";
 
 import { SideMenu } from "@/components/ui/SideMenu";
-import { PostList } from "@/features/post/components/PostList";
-import { getPostsByYear } from "@/lib/content/notion/api";
 import { getYearRange } from "@/lib/utils";
+import { PostListSection } from "@/modules/posts/ui/section/post-list";
 
 type Props = {
   children: ReactNode;
@@ -17,14 +16,11 @@ export async function generateStaticParams() {
 
 export default async function YearLayout({ children, params }: Props) {
   const { year } = await params;
-  const posts = await getPostsByYear(Number(year));
 
   return (
     <>
       <SideMenu title={`${year}年`} isInner>
-        <Suspense fallback={<div>Loading...</div>}>
-          <PostList posts={posts} year={year} />
-        </Suspense>
+        <PostListSection year={year} />
       </SideMenu>
       <div className="flex-1 lg:bg-dots">{children}</div>
     </>

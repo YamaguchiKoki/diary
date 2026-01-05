@@ -4,9 +4,10 @@ import type {
   PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { cacheLife, cacheTag } from "next/cache";
+
+import { dataSourceId, notion } from "@/modules/notion/client";
+import { parseBlock } from "@/modules/notion/service/parser";
 import type { Post } from "../types";
-import { dataSourceId, notion } from "./client";
-import { parseBlock } from "./parser";
 
 export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
   const response = await notion.dataSources.query({

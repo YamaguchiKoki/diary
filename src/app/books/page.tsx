@@ -1,5 +1,9 @@
-import React from "react";
+import { ScrollArea } from "@/components/layouts/ScrollArea";
 
 export default async function Home() {
-  return <div>page</div>;
+  return (
+    <ScrollArea className="lg:hidden">
+      <p></p>
+    </ScrollArea>
+  );
 }

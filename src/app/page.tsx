@@ -1,8 +1,8 @@
 import { ScrollArea } from "@/components/layouts/ScrollArea";
+import { FloatingHeader } from "@/components/ui/FloatingHeader";
 import { Highlighter } from "@/components/ui/highlighter";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { Spacer } from "@/components/ui/Spacer";
-import { FloatingHeader } from "@/features/post/components/FloatingHeader";
-import { PageTitle } from "@/features/post/components/PageTitle";
 
 export default async function Home() {
   return (

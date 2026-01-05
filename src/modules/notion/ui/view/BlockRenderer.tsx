@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { FC } from "react";
-import { RichText } from "@/features/post/components/RichText";
-import type { Block } from "@/lib/content/types";
+import type { Block } from "@/modules/notion/types";
+import { RichText } from "@/modules/notion/ui/view/RichText";
 
 type Props = {
   block: Block;
