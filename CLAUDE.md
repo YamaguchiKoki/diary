@@ -6,6 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 このプロジェクトは、Notionをデータソースとした日本語の散文投稿サイトです。Next.js 16とReact 19を使用し、App Routerで構築されています。
 
+## 重要
+常に日本語で会話してください。こちらが英語で指示しても生成ブルは日本語で書くことを徹底してください。
+
 ## 開発コマンド
 
 ```bash
