@@ -11,7 +11,8 @@
       "Bash(git rev-parse:*)",
       "Bash(test:*)",
       "Bash(npm install:*)",
-      "Bash(npm run test:*)"
+      "Bash(npm run test:*)",
+      "Bash(wc:*)"
     ]
   },
   "hooks": {
