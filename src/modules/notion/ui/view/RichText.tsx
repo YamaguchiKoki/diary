@@ -10,13 +10,14 @@ export const RichText: FC<Props> = ({ texts }) => {
     <>
       {texts.map((t, i) => {
         let node: ReactNode = t.text;
+        const { annotations } = t;
 
-        if (t.code)
+        if (annotations.code)
           node = <code className="bg-gray-100 px-1 rounded">{node}</code>;
-        if (t.bold) node = <strong>{node}</strong>;
-        if (t.italic) node = <em>{node}</em>;
-        if (t.strikethrough) node = <s>{node}</s>;
-        if (t.underline) node = <u>{node}</u>;
+        if (annotations.bold) node = <strong>{node}</strong>;
+        if (annotations.italic) node = <em>{node}</em>;
+        if (annotations.strikethrough) node = <s>{node}</s>;
+        if (annotations.underline) node = <u>{node}</u>;
         if (t.link)
           node = (
             <a href={t.link} className="text-blue-600 underline">

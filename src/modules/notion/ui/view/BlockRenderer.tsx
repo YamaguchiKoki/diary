@@ -36,7 +36,10 @@ export const BlockRenderer: FC<Props> = ({ block }) => {
           <Image
             src={block.url}
             alt={block.caption ?? ""}
-            className="max-w-full"
+            width={800}
+            height={600}
+            className="max-w-full h-auto"
+            sizes="(max-width: 768px) 100vw, 800px"
           />
           {block.caption && (
             <figcaption className="text-sm text-gray-500">
