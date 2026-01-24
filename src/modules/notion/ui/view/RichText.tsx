@@ -1,11 +1,22 @@
 import type { FC, ReactNode } from "react";
 import type { RichText as RichTextType } from "@/modules/notion/types";
 
-type Props = {
+/**
+ * RichTextコンポーネントのプロパティ。
+ */
+export type RichTextProps = {
+  /** レンダリングするリッチテキストの配列 */
   texts: RichTextType[];
 };
 
-export const RichText: FC<Props> = ({ texts }) => {
+/**
+ * リッチテキストをレンダリングするコンポーネント。
+ * 太字、イタリック、コード、取り消し線、下線、リンクをサポートします。
+ *
+ * @param props - コンポーネントのプロパティ
+ * @returns レンダリングされたリッチテキスト
+ */
+export const RichText: FC<RichTextProps> = ({ texts }) => {
   return (
     <>
       {texts.map((t, i) => {
