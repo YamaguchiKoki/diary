@@ -3,7 +3,13 @@ type PostId = string;
 
 export const routes = {
   home: () => "/" as const,
-  books: () => "/books",
+  books: {
+    index: (topic?: string) => {
+      const base = "/books";
+      return topic ? `${base}?topic=${encodeURIComponent(topic)}` : base;
+    },
+    detail: (id: string) => `/books/${id}` as const,
+  },
 
   posts: {
     year: (year: Year) => `/posts/${year}` as const,
