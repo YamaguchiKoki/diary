@@ -10,7 +10,8 @@
       "Bash(fi)",
       "Bash(git rev-parse:*)",
       "Bash(test:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm run test:*)"
     ]
   },
   "hooks": {

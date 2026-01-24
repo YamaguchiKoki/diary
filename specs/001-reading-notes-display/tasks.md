@@ -24,16 +24,16 @@
 
 **目的**: プロジェクトの初期化と環境変数の設定、テスト環境のセットアップ
 
-- [ ] T001 環境変数 `NOTION_READING_NOTES_DATABASE_ID` を `.env.local` に追加
-- [ ] T002 `src/lib/env.ts` に環境変数バリデーションを追加（zodスキーマ）
-- [ ] T003 `src/lib/routes.ts` に books ルート定義を追加（`books.index(topic?)`, `books.detail(id)`）
-- [ ] T004 環境変数が正しく読み込まれることを確認（`npm run dev` でエラーがないこと）
-- [ ] T005 nuqsをインストール（`npm install nuqs`）
-- [ ] T006 Vitestをインストール（`npm install -D vitest @vitejs/plugin-react jsdom`）
-- [ ] T007 Testing Libraryをインストール（`npm install -D @testing-library/react @testing-library/jest-dom @testing-library/user-event`）
-- [ ] T008 MSW (Mock Service Worker) をインストール（`npm install -D msw`）
-- [ ] T009 `vitest.config.ts` にVitest設定を作成（jsdom環境、パスエイリアス設定）
-- [ ] T010 `vitest.setup.ts` にテストセットアップファイルを作成（@testing-library/jest-dom のインポート）
+- [X] T001 環境変数 `NOTION_READING_NOTES_DATABASE_ID` を `.env.local` に追加
+- [X] T002 `src/lib/env.ts` に環境変数バリデーションを追加（zodスキーマ）
+- [X] T003 `src/lib/routes.ts` に books ルート定義を追加（`books.index(topic?)`, `books.detail(id)`）
+- [X] T004 環境変数が正しく読み込まれることを確認（`npm run dev` でエラーがないこと）
+- [X] T005 nuqsをインストール（`npm install nuqs`）
+- [X] T006 Vitestをインストール（`npm install -D vitest @vitejs/plugin-react jsdom`）
+- [X] T007 Testing Libraryをインストール（`npm install -D @testing-library/react @testing-library/jest-dom @testing-library/user-event`）
+- [X] T008 MSW (Mock Service Worker) をインストール（`npm install -D msw`）
+- [X] T009 `vitest.config.ts` にVitest設定を作成（jsdom環境、パスエイリアス設定）
+- [X] T010 `vitest.setup.ts` にテストセットアップファイルを作成（@testing-library/jest-dom のインポート）
 
 ---
 
@@ -43,13 +43,13 @@
 
 **⚠️ 重要**: このフェーズが完了するまで、ユーザーストーリーの作業を開始できません
 
-- [ ] T011 [P] `modules/books/types/index.ts` に型定義を作成（ReadingNote, ReadingNoteForListView）
-- [ ] T012 [P] `modules/books/service/parser.ts` に `parseReadingNotePage()` 関数を作成
-- [ ] T013 `modules/books/service/api.ts` に `getReadingNotes(options?)` 関数を追加
-- [ ] T014 `modules/books/service/api.ts` に `getReadingNote(id)` 関数を追加
-- [ ] T015 `modules/books/service/api.ts` に `getAllTopics()` 関数を追加
-- [ ] T016 データ取得関数の動作確認（Notion APIから正しくデータが取得できることを確認）
-- [ ] T017 `modules/books/service/__tests__/parser.test.ts` に `parseReadingNotePage()` の単体テストを作成
+- [X] T011 [P] `modules/books/types/index.ts` に型定義を作成（ReadingNote, ReadingNoteForListView）
+- [X] T012 [P] `modules/books/service/parser.ts` に `parseReadingNotePage()` 関数を作成
+- [X] T013 `modules/books/service/api.ts` に `getReadingNotes(options?)` 関数を追加
+- [X] T014 `modules/books/service/api.ts` に `getReadingNote(id)` 関数を追加
+- [X] T015 `modules/books/service/api.ts` に `getAllTopics()` 関数を追加
+- [X] T016 データ取得関数の動作確認（Notion APIから正しくデータが取得できることを確認）
+- [X] T017 `modules/books/service/__tests__/parser.test.ts` に `parseReadingNotePage()` の単体テストを作成
 
 **チェックポイント**: 基盤が整い、ユーザーストーリーの実装を並列で開始可能
 
@@ -63,19 +63,19 @@
 
 ### ユーザーストーリー1の実装
 
-- [ ] T018 [P] [US1] `modules/books/ui/view/ReadingNoteListItem.tsx` にリストアイテムコンポーネントを作成
-- [ ] T019 [P] [US1] `modules/books/ui/view/ReadingNoteListView.tsx` にリストビューコンポーネントを作成
-- [ ] T020 [US1] `modules/books/ui/section/ReadingNoteListSection.tsx` にリストセクション（Server Component）を作成
-- [ ] T021 [US1] `app/books/layout.tsx` にレイアウトを作成（NuqsAdapter + サイドメニュー構造のみ、トピックフィルターは後で追加）
-- [ ] T022 [US1] `app/books/page.tsx` に一覧ページを作成（デスクトップ・モバイル対応）
-- [ ] T023 [US1] `/books` にアクセスして公開読書メモが表示されることを確認
-- [ ] T024 [US1] 非公開読書メモ（is_public=false）が表示されないことを確認
-- [ ] T025 [US1] 読書メモが作成日降順でソートされていることを確認
+- [X] T018 [P] [US1] `modules/books/ui/view/ReadingNoteListItem.tsx` にリストアイテムコンポーネントを作成
+- [X] T019 [P] [US1] `modules/books/ui/view/ReadingNoteListView.tsx` にリストビューコンポーネントを作成
+- [X] T020 [US1] `modules/books/ui/section/ReadingNoteListSection.tsx` にリストセクション（Server Component）を作成
+- [X] T021 [US1] `app/books/layout.tsx` にレイアウトを作成（NuqsAdapter + サイドメニュー構造のみ、トピックフィルターは後で追加）
+- [X] T022 [US1] `app/books/page.tsx` に一覧ページを作成（デスクトップ・モバイル対応）
+- [X] T023 [US1] `/books` にアクセスして公開読書メモが表示されることを確認
+- [X] T024 [US1] 非公開読書メモ（is_public=false）が表示されないことを確認
+- [X] T025 [US1] 読書メモが作成日降順でソートされていることを確認
 
 ### ユーザーストーリー1のテスト
 
-- [ ] T026 [P] [US1] `modules/books/ui/view/__tests__/ReadingNoteListItem.test.tsx` にコンポーネントテストを作成
-- [ ] T027 [P] [US1] `modules/books/ui/view/__tests__/ReadingNoteListView.test.tsx` にコンポーネントテストを作成
+- [X] T026 [P] [US1] `modules/books/ui/view/__tests__/ReadingNoteListItem.test.tsx` にコンポーネントテストを作成
+- [X] T027 [P] [US1] `modules/books/ui/view/__tests__/ReadingNoteListView.test.tsx` にコンポーネントテストを作成
 
 **チェックポイント**: この時点で、ユーザーストーリー1は完全に機能し、独立してテスト可能であるべきです
 
@@ -91,20 +91,20 @@
 
 ### ユーザーストーリー3の実装
 
-- [ ] T028 [P] [US3] `modules/books/ui/view/ReadingNoteDetailView.tsx` に詳細ビューコンポーネントを作成
-- [ ] T029 [P] [US3] `modules/books/ui/view/ReadingNoteDetailHeader.tsx` に詳細ヘッダーコンポーネントを作成
-- [ ] T030 [US3] `modules/books/ui/section/ReadingNoteDetailSection.tsx` に詳細セクション（Server Component）を作成
-- [ ] T031 [US3] `app/books/[id]/page.tsx` に詳細ページを作成
-- [ ] T032 [US3] `/books/[id]` にアクセスして読書メモ詳細が表示されることを確認
-- [ ] T033 [US3] タイトル、トピック、作成日、本文ブロックが正しく表示されることを確認
-- [ ] T034 [US3] Notionブロック（段落、見出し、リスト、コード、画像、引用）が適切にレンダリングされることを確認
-- [ ] T035 [US3] 非公開読書メモに直接URLアクセスすると404エラーになることを確認
-- [ ] T036 [US3] 一覧ページ（US1）から詳細ページへの遷移が正しく動作することを確認
+- [X] T028 [P] [US3] `modules/books/ui/view/ReadingNoteDetailView.tsx` に詳細ビューコンポーネントを作成
+- [X] T029 [P] [US3] `modules/books/ui/view/ReadingNoteDetailHeader.tsx` に詳細ヘッダーコンポーネントを作成
+- [X] T030 [US3] `modules/books/ui/section/ReadingNoteDetailSection.tsx` に詳細セクション（Server Component）を作成
+- [X] T031 [US3] `app/books/[id]/page.tsx` に詳細ページを作成
+- [X] T032 [US3] `/books/[id]` にアクセスして読書メモ詳細が表示されることを確認
+- [X] T033 [US3] タイトル、トピック、作成日、本文ブロックが正しく表示されることを確認
+- [X] T034 [US3] Notionブロック（段落、見出し、リスト、コード、画像、引用）が適切にレンダリングされることを確認
+- [X] T035 [US3] 非公開読書メモに直接URLアクセスすると404エラーになることを確認
+- [X] T036 [US3] 一覧ページ（US1）から詳細ページへの遷移が正しく動作することを確認
 
 ### ユーザーストーリー3のテスト
 
-- [ ] T037 [P] [US3] `modules/books/ui/view/__tests__/ReadingNoteDetailView.test.tsx` にコンポーネントテストを作成
-- [ ] T038 [P] [US3] `modules/books/ui/view/__tests__/ReadingNoteDetailHeader.test.tsx` にコンポーネントテストを作成
+- [X] T037 [P] [US3] `modules/books/ui/view/__tests__/ReadingNoteDetailView.test.tsx` にコンポーネントテストを作成
+- [X] T038 [P] [US3] `modules/books/ui/view/__tests__/ReadingNoteDetailHeader.test.tsx` にコンポーネントテストを作成
 
 **チェックポイント**: この時点で、ユーザーストーリー1とユーザーストーリー3の両方が独立して機能するべきです
 
@@ -118,21 +118,21 @@
 
 ### ユーザーストーリー2の実装
 
-- [ ] T039 [P] [US2] `modules/books/hooks/useTopicFilter.ts` にカスタムフックを作成（nuqsを使用）
-- [ ] T040 [P] [US2] `modules/books/ui/view/TopicFilter.tsx` にトピックフィルターコンポーネントを作成（useTopicFilterを使用）
-- [ ] T041 [US2] `app/books/layout.tsx` にトピックフィルターを統合（サイドメニューに"All"とトピック一覧を表示）
-- [ ] T042 [US2] `app/books/page.tsx` でクエリパラメータ `topic` を読み取り、フィルタリング機能を実装
-- [ ] T043 [US2] サイドメニューに"All"と全トピックのリストが表示されることを確認
-- [ ] T044 [US2] 特定のトピックをクリックすると該当する読書メモのみが表示されることを確認
-- [ ] T045 [US2] "All"をクリックするとすべての読書メモが表示されることを確認
-- [ ] T046 [US2] 選択中のトピックがアクティブ状態（ハイライト）で表示されることを確認
-- [ ] T047 [US2] 複数のトピックが付与されている読書メモが、いずれかのトピックでフィルタリングした際に結果に含まれることを確認
-- [ ] T048 [US2] モバイルデバイスでFloatingHeaderのメニューボタンをタップするとトピック一覧が表示されることを確認
+- [X] T039 [P] [US2] `modules/books/hooks/useTopicFilter.ts` にカスタムフックを作成（nuqsを使用）
+- [X] T040 [P] [US2] `modules/books/ui/view/TopicFilter.tsx` にトピックフィルターコンポーネントを作成（useTopicFilterを使用）
+- [X] T041 [US2] `app/books/layout.tsx` にトピックフィルターを統合（サイドメニューに"All"とトピック一覧を表示）
+- [X] T042 [US2] `app/books/page.tsx` でクエリパラメータ `topic` を読み取り、フィルタリング機能を実装
+- [X] T043 [US2] サイドメニューに"All"と全トピックのリストが表示されることを確認
+- [X] T044 [US2] 特定のトピックをクリックすると該当する読書メモのみが表示されることを確認
+- [X] T045 [US2] "All"をクリックするとすべての読書メモが表示されることを確認
+- [X] T046 [US2] 選択中のトピックがアクティブ状態（ハイライト）で表示されることを確認
+- [X] T047 [US2] 複数のトピックが付与されている読書メモが、いずれかのトピックでフィルタリングした際に結果に含まれることを確認
+- [X] T048 [US2] モバイルデバイスでFloatingHeaderのメニューボタンをタップするとトピック一覧が表示されることを確認
 
 ### ユーザーストーリー2のテスト
 
-- [ ] T049 [P] [US2] `modules/books/hooks/__tests__/useTopicFilter.test.ts` にカスタムフックのテストを作成
-- [ ] T050 [P] [US2] `modules/books/ui/view/__tests__/TopicFilter.test.tsx` にコンポーネントテストを作成
+- [X] T049 [P] [US2] `modules/books/hooks/__tests__/useTopicFilter.test.ts` にカスタムフックのテストを作成
+- [X] T050 [P] [US2] `modules/books/ui/view/__tests__/TopicFilter.test.tsx` にコンポーネントテストを作成
 
 **チェックポイント**: すべてのユーザーストーリーが独立して機能するようになりました
 
@@ -142,19 +142,19 @@
 
 **目的**: 複数のユーザーストーリーに影響する改善とクオリティ保証
 
-- [ ] T051 [P] 型チェックを実行（`npm run typecheck`）してエラーがないことを確認
-- [ ] T052 [P] Biome lintを実行（`npm run lint`）してエラーがないことを確認
-- [ ] T053 [P] Biomeフォーマットを実行（`npm run format`）してコードを整形
-- [ ] T054 [P] テストを実行（`npm run test`）してすべてのテストがパスすることを確認
-- [ ] T055 読書メモが1件も存在しない場合、一覧ページに適切なメッセージが表示されることを確認（エッジケース対応）
-- [ ] T056 選択したトピックに該当する読書メモが存在しない場合、その旨のメッセージが表示されることを確認（エッジケース対応）
-- [ ] T057 トピックが設定されていない読書メモも正常に表示されることを確認（エッジケース対応）
-- [ ] T058 非常に長いタイトルや大量のトピックが設定されている場合でも、UIが崩れないことを確認（エッジケース対応）
-- [ ] T059 読書メモの本文に画像やコードブロックが含まれている場合でも、適切にレンダリングされることを確認（エッジケース対応）
-- [ ] T060 デスクトップ（1024px以上）でサイドメニューが固定表示されることを確認
-- [ ] T061 モバイル（1024px未満）でFloatingHeaderとMobileDrawerが表示されることを確認
-- [ ] T062 quickstart.mdの手順に従って動作確認を実施
-- [ ] T063 グローバルサイドメニューに読書メモへのリンクを追加（`components/ui/MenuItem.tsx`のMenuContentを更新）
+- [X] T051 [P] 型チェックを実行（`npm run typecheck`）してエラーがないことを確認
+- [X] T052 [P] Biome lintを実行（`npm run lint`）してエラーがないことを確認
+- [X] T053 [P] Biomeフォーマットを実行（`npm run format`）してコードを整形
+- [X] T054 [P] テストを実行（`npm run test`）してすべてのテストがパスすることを確認
+- [X] T055 読書メモが1件も存在しない場合、一覧ページに適切なメッセージが表示されることを確認（エッジケース対応）
+- [X] T056 選択したトピックに該当する読書メモが存在しない場合、その旨のメッセージが表示されることを確認（エッジケース対応）
+- [X] T057 トピックが設定されていない読書メモも正常に表示されることを確認（エッジケース対応）
+- [X] T058 非常に長いタイトルや大量のトピックが設定されている場合でも、UIが崩れないことを確認（エッジケース対応）
+- [X] T059 読書メモの本文に画像やコードブロックが含まれている場合でも、適切にレンダリングされることを確認（エッジケース対応）
+- [X] T060 デスクトップ（1024px以上）でサイドメニューが固定表示されることを確認
+- [X] T061 モバイル（1024px未満）でFloatingHeaderとMobileDrawerが表示されることを確認
+- [X] T062 quickstart.mdの手順に従って動作確認を実施
+- [X] T063 グローバルサイドメニューに読書メモへのリンクを追加（`components/ui/MenuItem.tsx`のMenuContentを更新）
 
 ---
 
