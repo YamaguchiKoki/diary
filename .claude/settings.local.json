@@ -3,7 +3,14 @@
     "allow": [
       "Bash(npm run typecheck:*)",
       "Bash(npm run format:*)",
-      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)"
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(if [ -d \"/Users/kokiyamaguchi/Documents/projects/git/personal/github.com/YamaguchiKoki/diary/specs/001-reading-notes-display/checklists\" ])",
+      "Bash(then echo \"EXISTS\")",
+      "Bash(else echo \"NOT_EXISTS\")",
+      "Bash(fi)",
+      "Bash(git rev-parse:*)",
+      "Bash(test:*)",
+      "Bash(npm install:*)"
     ]
   },
   "hooks": {
