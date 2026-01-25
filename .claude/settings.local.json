@@ -35,5 +35,6 @@
         ]
       }
     ]
-  }
+  },
+  "enabledMcpjsonServers": ["chrome-devtools", "context7", "playwright"]
 }
