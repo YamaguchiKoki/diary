@@ -41,7 +41,7 @@ export default async function PostPage({ params }: Props) {
           />
         </Suspense>
       </ErrorBoundary>
-      <PostDetailSection postId={id} />
+      <PostDetailSection postId={id} postPromise={postPromise} />
     </ScrollArea>
   );
 }

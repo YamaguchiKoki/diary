@@ -4,11 +4,21 @@ import { PageTitle } from "@/components/ui/PageTitle";
 import type { Post } from "@/modules/notion/types";
 import { BlockRenderer } from "@/modules/notion/ui/view/BlockRenderer";
 
-type PostDetailProps = {
+/**
+ * PostDetailViewコンポーネントのプロパティ。
+ */
+export type PostDetailViewProps = {
+  /** 投稿詳細を取得するPromise */
   postPromise: Promise<Post | null>;
 };
 
-export const PostDetailView: FC<PostDetailProps> = ({ postPromise }) => {
+/**
+ * 投稿詳細を表示するViewコンポーネント。
+ *
+ * @param props - コンポーネントのプロパティ
+ * @returns 投稿詳細の表示
+ */
+export const PostDetailView: FC<PostDetailViewProps> = ({ postPromise }) => {
   const post = use(postPromise);
 
   if (!post) {

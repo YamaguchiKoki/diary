@@ -2,20 +2,61 @@ import type {
   BlockObjectResponse,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-import type { Block, RichText } from "../types";
+import type { Block, RichText, RichTextAnnotations } from "../types";
 
+/**
+ * RichTextItemResponseからアノテーションを抽出します。
+ * @param annotations - Notion APIのアノテーション
+ * @returns RichTextAnnotations
+ */
+function parseAnnotations(
+  annotations: RichTextItemResponse["annotations"],
+): RichTextAnnotations {
+  return {
+    bold: annotations.bold,
+    italic: annotations.italic,
+    code: annotations.code,
+    strikethrough: annotations.strikethrough,
+    underline: annotations.underline,
+  };
+}
+
+/**
+ * NotionのリッチテキストをアプリケーションのRichText型にパースします。
+ * @param richTexts - Notion APIから取得したリッチテキスト配列
+ * @returns パース済みRichText配列
+ */
 export function parseRichText(richTexts: RichTextItemResponse[]): RichText[] {
   return richTexts.map((rt) => ({
     text: rt.plain_text,
-    bold: rt.annotations.bold,
-    italic: rt.annotations.italic,
-    code: rt.annotations.code,
-    strikethrough: rt.annotations.strikethrough,
-    underline: rt.annotations.underline,
+    annotations: parseAnnotations(rt.annotations),
     link: rt.href ?? undefined,
   }));
 }
 
+/**
+ * 見出しブロックをパースするヘルパー関数。
+ * heading_1, heading_2, heading_3の共通処理を統合します。
+ * @param richText - 見出しのリッチテキスト
+ * @param level - 見出しレベル（1, 2, 3）
+ * @returns HeadingBlock
+ */
+function parseHeadingBlock(
+  richText: RichTextItemResponse[],
+  level: 1 | 2 | 3,
+): Block {
+  return {
+    type: "heading",
+    level,
+    children: parseRichText(richText),
+  };
+}
+
+/**
+ * NotionブロックをアプリケーションのBlock型にパースします。
+ * @param block - Notion APIから取得したブロックオブジェクト
+ * @returns パース済みBlock、またはサポート外のブロックタイプの場合null
+ */
 export function parseBlock(block: BlockObjectResponse): Block | null {
   switch (block.type) {
     case "paragraph":
@@ -24,23 +65,11 @@ export function parseBlock(block: BlockObjectResponse): Block | null {
         children: parseRichText(block.paragraph.rich_text),
       };
     case "heading_1":
-      return {
-        type: "heading",
-        level: 1,
-        children: parseRichText(block.heading_1.rich_text),
-      };
+      return parseHeadingBlock(block.heading_1.rich_text, 1);
     case "heading_2":
-      return {
-        type: "heading",
-        level: 2,
-        children: parseRichText(block.heading_2.rich_text),
-      };
+      return parseHeadingBlock(block.heading_2.rich_text, 2);
     case "heading_3":
-      return {
-        type: "heading",
-        level: 3,
-        children: parseRichText(block.heading_3.rich_text),
-      };
+      return parseHeadingBlock(block.heading_3.rich_text, 3);
     case "code":
       return {
         type: "code",

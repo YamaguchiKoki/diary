@@ -10,11 +10,26 @@ import type {
   ReadingNoteForListView,
 } from "@/modules/books/types";
 import { dataSourceId, notion } from "@/modules/notion/client";
+import {
+  extractPublished,
+  extractPublishedAt,
+  extractThumbnail,
+  extractTitle,
+  mapPageToPost,
+} from "@/modules/notion/service/mapper";
 import { parseBlock } from "@/modules/notion/service/parser";
 import { env } from "../../../../env";
 import type { Post } from "../types";
 
+/**
+ * 全投稿を取得します（公開済みのみ）。
+ * @returns 全投稿のリスト（blocksなし）
+ */
 export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
+  "use cache";
+  cacheTag("posts", "posts-all");
+  cacheLife("hours");
+
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
     filter: {
@@ -33,19 +48,19 @@ export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
 
   return response.results
     .filter((page): page is PageObjectResponse => page.object === "page")
-    .map((page) => ({
-      id: page.id,
-      title: extractTitle(page),
-      published: extractPublished(page),
-      publishedAt: extractPublishedAt(page),
-      thumbnail: extractThumbnail(page),
-    }));
+    .map(mapPageToPost);
 }
 
+/**
+ * 投稿詳細を取得します。
+ * @param id - 投稿のID
+ * @returns 投稿詳細、見つからない場合はnull
+ */
 export async function getPost(id: string): Promise<Post | null> {
   "use cache";
+  cacheTag("posts", `posts-${id}`);
   cacheLife("days");
-  cacheTag(`posts-${id}`);
+
   try {
     const page = await notion.pages.retrieve({ page_id: id });
 
@@ -73,12 +88,18 @@ export async function getPost(id: string): Promise<Post | null> {
   }
 }
 
+/**
+ * 特定年の投稿を取得します。
+ * @param year - 取得する年
+ * @returns 指定年の投稿リスト（blocksなし）
+ */
 export async function getPostsByYear(
   year: number,
 ): Promise<Omit<Post, "blocks">[]> {
   "use cache";
+  cacheTag("posts", `posts-${year}`);
   cacheLife("hours");
-  cacheTag(`posts-${year}`);
+
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
     filter: {
@@ -113,66 +134,13 @@ export async function getPostsByYear(
 
   return response.results
     .filter((page): page is PageObjectResponse => page.object === "page")
-    .map((page) => ({
-      id: page.id,
-      title: extractTitle(page),
-      published: extractPublished(page),
-      publishedAt: extractPublishedAt(page),
-      thumbnail: extractThumbnail(page),
-    }));
+    .map(mapPageToPost);
 }
 
 function isFullBlock(
   block: BlockObjectResponse | PartialBlockObjectResponse,
 ): block is BlockObjectResponse {
   return "type" in block;
-}
-
-function extractTitle(page: PageObjectResponse): string {
-  const titleProp = page.properties.title;
-  if (titleProp.type === "title") {
-    return titleProp.title[0]?.plain_text ?? "Untitled";
-  }
-  return "Untitled";
-}
-
-function extractPublished(page: PageObjectResponse): boolean {
-  const prop = page.properties.published;
-  if (prop.type === "checkbox") {
-    return prop.checkbox;
-  }
-  return false;
-}
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function extractPublishedAt(page: PageObjectResponse): string | null {
-  const prop = page.properties.published_at;
-  if (prop.type === "date" && prop.date?.start) {
-    return formatDate(prop.date.start);
-  }
-  return null;
-}
-
-function extractThumbnail(page: PageObjectResponse): string | null {
-  const prop = page.properties.thumbnail;
-  if (prop.type === "files" && prop.files.length > 0) {
-    const file = prop.files[0];
-    if (file.type === "external") {
-      return file.external.url;
-    }
-    if (file.type === "file") {
-      return file.file.url;
-    }
-  }
-  return null;
 }
 
 /**
@@ -182,7 +150,7 @@ export async function getReadingNotes(options?: {
   topic?: string;
 }): Promise<ReadingNoteForListView[]> {
   "use cache";
-  cacheTag("reading-notes-all");
+  cacheTag("reading-notes", "reading-notes-all");
   cacheLife("hours");
 
   const response = await notion.dataSources.query({
@@ -217,7 +185,7 @@ export async function getReadingNotes(options?: {
  */
 export async function getReadingNote(id: string): Promise<ReadingNote | null> {
   "use cache";
-  cacheTag(`reading-note-${id}`);
+  cacheTag("reading-notes", `reading-note-${id}`);
   cacheLife("days");
 
   try {
@@ -255,7 +223,7 @@ export async function getReadingNote(id: string): Promise<ReadingNote | null> {
  */
 export async function getAllTopics(): Promise<string[]> {
   "use cache";
-  cacheTag("reading-notes-topics");
+  cacheTag("reading-notes", "reading-notes-topics");
   cacheLife("hours");
 
   const response = await notion.dataSources.query({
