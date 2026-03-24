@@ -10,12 +10,23 @@ export type RichText = {
 
 export type Block =
   | { type: "paragraph"; children: RichText[] }
-  | { type: "heading"; level: 1 | 2 | 3; children: RichText[] }
+  | {
+      type: "heading";
+      level: 1 | 2 | 3;
+      is_toggleable: boolean;
+      children: RichText[];
+    }
   | { type: "code"; language: string; content: string }
   | { type: "image"; url: string; caption?: string }
   | { type: "quote"; children: RichText[] }
-  | { type: "bulleted_list_item"; children: RichText[] }
-  | { type: "numbered_list_item"; children: RichText[] };
+  | { type: "divider" }
+  | { type: "bulleted_list_item"; children: RichText[]; nestedBlocks: Block[] }
+  | { type: "numbered_list_item"; children: RichText[]; nestedBlocks: Block[] };
+
+export type NonListBlock = Exclude<
+  Block,
+  { type: "bulleted_list_item" | "numbered_list_item" }
+>;
 
 export type Post = {
   id: string;

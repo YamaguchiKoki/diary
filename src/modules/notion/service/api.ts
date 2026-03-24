@@ -12,7 +12,7 @@ import type {
 import { dataSourceId, notion } from "@/modules/notion/client";
 import { parseBlock } from "@/modules/notion/service/parser";
 import { env } from "../../../../env";
-import type { Post } from "../types";
+import type { Block, Post } from "../types";
 
 export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
   const response = await notion.dataSources.query({
@@ -55,10 +55,11 @@ export async function getPost(id: string): Promise<Post | null> {
 
     const blocksResponse = await notion.blocks.children.list({ block_id: id });
 
-    const blocks = blocksResponse.results
-      .filter(isFullBlock)
-      .map(parseBlock)
-      .filter((block): block is NonNullable<typeof block> => block !== null);
+    const blocks = (
+      await Promise.all(
+        blocksResponse.results.filter(isFullBlock).map(parseBlockWithChildren),
+      )
+    ).filter((block): block is Block => block !== null);
 
     return {
       id: page.id,
@@ -128,6 +129,20 @@ function isFullBlock(
   return "type" in block;
 }
 
+async function parseBlockWithChildren(
+  block: BlockObjectResponse,
+): Promise<Block | null> {
+  if (
+    (block.type === "bulleted_list_item" ||
+      block.type === "numbered_list_item") &&
+    block.has_children
+  ) {
+    const res = await notion.blocks.children.list({ block_id: block.id });
+    return parseBlock(block, res.results.filter(isFullBlock));
+  }
+  return parseBlock(block);
+}
+
 function extractTitle(page: PageObjectResponse): string {
   const titleProp = page.properties.title;
   if (titleProp.type === "title") {
@@ -175,9 +190,6 @@ function extractThumbnail(page: PageObjectResponse): string | null {
   return null;
 }
 
-/**
- * 読書メモ一覧を取得（公開のみ）
- */
 export async function getReadingNotes(options?: {
   topic?: string;
 }): Promise<ReadingNoteForListView[]> {
@@ -203,7 +215,6 @@ export async function getReadingNotes(options?: {
     .filter((page): page is PageObjectResponse => page.object === "page")
     .map(parseReadingNotePage);
 
-  // トピックフィルタリング（オプション）
   if (options?.topic) {
     const targetTopic = options.topic;
     notes = notes.filter((note) => note.topics.includes(targetTopic));
@@ -212,9 +223,6 @@ export async function getReadingNotes(options?: {
   return notes;
 }
 
-/**
- * 読書メモ詳細を取得
- */
 export async function getReadingNote(id: string): Promise<ReadingNote | null> {
   "use cache";
   cacheTag(`reading-note-${id}`);
@@ -236,10 +244,11 @@ export async function getReadingNote(id: string): Promise<ReadingNote | null> {
       return null;
     }
 
-    const blocks = blocksResponse.results
-      .filter(isFullBlock)
-      .map(parseBlock)
-      .filter((block): block is NonNullable<typeof block> => block !== null);
+    const blocks = (
+      await Promise.all(
+        blocksResponse.results.filter(isFullBlock).map(parseBlockWithChildren),
+      )
+    ).filter((block): block is Block => block !== null);
 
     return {
       ...parsedPage,
@@ -250,9 +259,6 @@ export async function getReadingNote(id: string): Promise<ReadingNote | null> {
   }
 }
 
-/**
- * 全トピックを取得
- */
 export async function getAllTopics(): Promise<string[]> {
   "use cache";
   cacheTag("reading-notes-topics");
