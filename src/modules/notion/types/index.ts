@@ -1,33 +1,113 @@
+/**
+ * RichTextのアノテーション（書式設定）を表す型
+ */
+export type RichTextAnnotations = {
+  bold: boolean;
+  italic: boolean;
+  code: boolean;
+  strikethrough: boolean;
+  underline: boolean;
+};
+
+/**
+ * リッチテキストを表す型
+ */
 export type RichText = {
   text: string;
-  bold?: boolean;
-  italic?: boolean;
-  code?: boolean;
-  strikethrough?: boolean;
-  underline?: boolean;
+  annotations: RichTextAnnotations;
   link?: string;
 };
 
+/**
+ * 段落ブロックを表す型
+ */
+export type ParagraphBlock = {
+  type: "paragraph";
+  children: RichText[];
+};
+
+/**
+ * 見出しブロックを表す型
+ */
+export type HeadingBlock = {
+  type: "heading";
+  level: 1 | 2 | 3;
+  is_toggleable: boolean;
+  children: RichText[];
+};
+
+/**
+ * コードブロックを表す型
+ */
+export type CodeBlock = {
+  type: "code";
+  language: string;
+  content: string;
+};
+
+/**
+ * 画像ブロックを表す型
+ */
+export type ImageBlock = {
+  type: "image";
+  url: string;
+  caption?: string;
+};
+
+/**
+ * 引用ブロックを表す型
+ */
+export type QuoteBlock = {
+  type: "quote";
+  children: RichText[];
+};
+
+/**
+ * 区切り線ブロックを表す型
+ */
+export type DividerBlock = {
+  type: "divider";
+};
+
+/**
+ * 箇条書きリストアイテムブロックを表す型
+ */
+export type BulletedListItemBlock = {
+  type: "bulleted_list_item";
+  children: RichText[];
+  nestedBlocks: Block[];
+};
+
+/**
+ * 番号付きリストアイテムブロックを表す型
+ */
+export type NumberedListItemBlock = {
+  type: "numbered_list_item";
+  children: RichText[];
+  nestedBlocks: Block[];
+};
+
+/**
+ * 全てのブロックタイプの判別ユニオン型
+ */
 export type Block =
-  | { type: "paragraph"; children: RichText[] }
-  | {
-      type: "heading";
-      level: 1 | 2 | 3;
-      is_toggleable: boolean;
-      children: RichText[];
-    }
-  | { type: "code"; language: string; content: string }
-  | { type: "image"; url: string; caption?: string }
-  | { type: "quote"; children: RichText[] }
-  | { type: "divider" }
-  | { type: "bulleted_list_item"; children: RichText[]; nestedBlocks: Block[] }
-  | { type: "numbered_list_item"; children: RichText[]; nestedBlocks: Block[] };
+  | ParagraphBlock
+  | HeadingBlock
+  | CodeBlock
+  | ImageBlock
+  | QuoteBlock
+  | DividerBlock
+  | BulletedListItemBlock
+  | NumberedListItemBlock;
 
 export type NonListBlock = Exclude<
   Block,
   { type: "bulleted_list_item" | "numbered_list_item" }
 >;
 
+/**
+ * 投稿を表す型
+ */
 export type Post = {
   id: string;
   title: string;

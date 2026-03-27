@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import type { Block } from "@/modules/notion/types";
+import type { NonListBlock } from "@/modules/notion/types";
 import { BlockRenderer } from "../BlockRenderer";
 import { makeTextChild } from "./test-utils";
 
 describe("BlockRenderer", () => {
   describe("heading_1", () => {
     it("heading level 1 が h1 要素でレンダリングされる", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "heading",
         level: 1,
         is_toggleable: false,
@@ -25,7 +25,7 @@ describe("BlockRenderer", () => {
 
   describe("heading_2", () => {
     it("heading level 2 が h2 要素でレンダリングされる", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "heading",
         level: 2,
         is_toggleable: false,
@@ -40,7 +40,7 @@ describe("BlockRenderer", () => {
 
   describe("heading_3", () => {
     it("heading level 3 が h3 要素でレンダリングされる", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "heading",
         level: 3,
         is_toggleable: false,
@@ -55,7 +55,7 @@ describe("BlockRenderer", () => {
 
   describe("quote", () => {
     it("quote ブロックが blockquote 要素でレンダリングされる", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "quote",
         children: [makeTextChild("引用テキスト")],
       };
@@ -68,7 +68,7 @@ describe("BlockRenderer", () => {
     });
 
     it("quote ブロックに左ボーダー相当のクラスが適用されている", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "quote",
         children: [makeTextChild("引用テキスト")],
       };
@@ -82,7 +82,7 @@ describe("BlockRenderer", () => {
 
   describe("divider", () => {
     it("divider ブロックが hr 要素でレンダリングされる", () => {
-      const block: Block = { type: "divider" };
+      const block: NonListBlock = { type: "divider" };
 
       const { container } = render(<BlockRenderer block={block} />);
 
@@ -92,7 +92,7 @@ describe("BlockRenderer", () => {
 
   describe("paragraph", () => {
     it("paragraph が p 要素でレンダリングされる", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "paragraph",
         children: [makeTextChild("本文テキスト")],
       };
@@ -105,7 +105,7 @@ describe("BlockRenderer", () => {
 
   describe("code", () => {
     it("code ブロックが pre/code 要素でレンダリングされる", () => {
-      const block: Block = {
+      const block: NonListBlock = {
         type: "code",
         language: "typescript",
         content: "const x = 1;",

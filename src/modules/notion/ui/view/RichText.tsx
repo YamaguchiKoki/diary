@@ -1,22 +1,34 @@
 import type { FC, ReactNode } from "react";
 import type { RichText as RichTextType } from "@/modules/notion/types";
 
-type Props = {
+/**
+ * RichTextコンポーネントのプロパティ。
+ */
+export type RichTextProps = {
+  /** レンダリングするリッチテキストの配列 */
   texts: RichTextType[];
 };
 
-export const RichText: FC<Props> = ({ texts }) => {
+/**
+ * リッチテキストをレンダリングするコンポーネント。
+ * 太字、イタリック、コード、取り消し線、下線、リンクをサポートします。
+ *
+ * @param props - コンポーネントのプロパティ
+ * @returns レンダリングされたリッチテキスト
+ */
+export const RichText: FC<RichTextProps> = ({ texts }) => {
   return (
     <>
       {texts.map((t, i) => {
         let node: ReactNode = t.text;
+        const { annotations } = t;
 
-        if (t.code)
+        if (annotations.code)
           node = <code className="bg-gray-100 px-1 rounded">{node}</code>;
-        if (t.bold) node = <strong>{node}</strong>;
-        if (t.italic) node = <em>{node}</em>;
-        if (t.strikethrough) node = <s>{node}</s>;
-        if (t.underline) node = <u>{node}</u>;
+        if (annotations.bold) node = <strong>{node}</strong>;
+        if (annotations.italic) node = <em>{node}</em>;
+        if (annotations.strikethrough) node = <s>{node}</s>;
+        if (annotations.underline) node = <u>{node}</u>;
         if (t.link)
           node = (
             <a href={t.link} className="text-blue-600 underline">
