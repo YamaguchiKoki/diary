@@ -85,7 +85,7 @@ const getNavSections = (): NavSection[] => {
       id: "reading",
       items: [
         {
-          href: routes.books(),
+          href: routes.books.index(),
           label: "Reading",
           icon: <LibraryBig size={16} />,
         },

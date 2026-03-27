@@ -4,9 +4,14 @@ import type {
   PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { cacheLife, cacheTag } from "next/cache";
-
+import { parseReadingNotePage } from "@/modules/books/service/parser";
+import type {
+  ReadingNote,
+  ReadingNoteForListView,
+} from "@/modules/books/types";
 import { dataSourceId, notion } from "@/modules/notion/client";
 import { parseBlock } from "@/modules/notion/service/parser";
+import { env } from "../../../../env";
 import type { Post } from "../types";
 
 export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
@@ -168,4 +173,110 @@ function extractThumbnail(page: PageObjectResponse): string | null {
     }
   }
   return null;
+}
+
+/**
+ * 読書メモ一覧を取得（公開のみ）
+ */
+export async function getReadingNotes(options?: {
+  topic?: string;
+}): Promise<ReadingNoteForListView[]> {
+  "use cache";
+  cacheTag("reading-notes-all");
+  cacheLife("hours");
+
+  const response = await notion.dataSources.query({
+    data_source_id: env.NOTION_READING_NOTES_DATABASE_ID,
+    filter: {
+      property: "is_public",
+      checkbox: { equals: true },
+    },
+    sorts: [
+      {
+        property: "created_at",
+        direction: "descending",
+      },
+    ],
+  });
+
+  let notes = response.results
+    .filter((page): page is PageObjectResponse => page.object === "page")
+    .map(parseReadingNotePage);
+
+  // トピックフィルタリング（オプション）
+  if (options?.topic) {
+    const targetTopic = options.topic;
+    notes = notes.filter((note) => note.topics.includes(targetTopic));
+  }
+
+  return notes;
+}
+
+/**
+ * 読書メモ詳細を取得
+ */
+export async function getReadingNote(id: string): Promise<ReadingNote | null> {
+  "use cache";
+  cacheTag(`reading-note-${id}`);
+  cacheLife("days");
+
+  try {
+    const [page, blocksResponse] = await Promise.all([
+      notion.pages.retrieve({ page_id: id }),
+      notion.blocks.children.list({ block_id: id }),
+    ]);
+
+    if (!("properties" in page)) {
+      return null;
+    }
+
+    const parsedPage = parseReadingNotePage(page);
+
+    if (!parsedPage.isPublic) {
+      return null;
+    }
+
+    const blocks = blocksResponse.results
+      .filter(isFullBlock)
+      .map(parseBlock)
+      .filter((block): block is NonNullable<typeof block> => block !== null);
+
+    return {
+      ...parsedPage,
+      blocks,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * 全トピックを取得
+ */
+export async function getAllTopics(): Promise<string[]> {
+  "use cache";
+  cacheTag("reading-notes-topics");
+  cacheLife("hours");
+
+  const response = await notion.dataSources.query({
+    data_source_id: env.NOTION_READING_NOTES_DATABASE_ID,
+    filter: {
+      property: "is_public",
+      checkbox: { equals: true },
+    },
+  });
+
+  const topicsSet = new Set<string>();
+  for (const page of response.results) {
+    if (page.object === "page" && "properties" in page) {
+      const topicProp = page.properties.topic;
+      if (topicProp?.type === "multi_select") {
+        for (const topic of topicProp.multi_select) {
+          topicsSet.add(topic.name);
+        }
+      }
+    }
+  }
+
+  return Array.from(topicsSet).sort((a, b) => a.localeCompare(b, "ja"));
 }
