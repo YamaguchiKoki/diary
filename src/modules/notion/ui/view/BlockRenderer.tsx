@@ -3,11 +3,22 @@ import type { FC } from "react";
 import type { Block } from "@/modules/notion/types";
 import { RichText } from "@/modules/notion/ui/view/RichText";
 
-type Props = {
+/**
+ * BlockRendererコンポーネントのプロパティ。
+ */
+export type BlockRendererProps = {
+  /** レンダリングするブロック */
   block: Block;
 };
 
-export const BlockRenderer: FC<Props> = ({ block }) => {
+/**
+ * Notionブロックをレンダリングするコンポーネント。
+ * 各ブロックタイプに応じた適切なHTML要素を生成します。
+ *
+ * @param props - コンポーネントのプロパティ
+ * @returns レンダリングされたブロック要素
+ */
+export const BlockRenderer: FC<BlockRendererProps> = ({ block }) => {
   switch (block.type) {
     case "paragraph":
       return (
@@ -36,7 +47,10 @@ export const BlockRenderer: FC<Props> = ({ block }) => {
           <Image
             src={block.url}
             alt={block.caption ?? ""}
-            className="max-w-full"
+            width={800}
+            height={600}
+            className="max-w-full h-auto"
+            sizes="(max-width: 768px) 100vw, 800px"
           />
           {block.caption && (
             <figcaption className="text-sm text-gray-500">
