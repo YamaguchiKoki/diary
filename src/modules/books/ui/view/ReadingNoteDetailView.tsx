@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { routes } from "@/lib/routes";
 import type { ReadingNote } from "@/modules/books/types";
-import { BlockRenderer } from "@/modules/notion/ui/view/BlockRenderer";
+import { BlocksRenderer } from "@/modules/notion/ui/view/BlocksRenderer";
 
 interface ReadingNoteDetailViewProps {
   note: ReadingNote;
@@ -43,9 +43,7 @@ export function ReadingNoteDetailView({ note }: ReadingNoteDetailViewProps) {
       />
 
       <div className="prose prose-lg max-w-none">
-        {note.blocks.map((block, index) => (
-          <BlockRenderer key={`${block.type}-${index}`} block={block} />
-        ))}
+        <BlocksRenderer blocks={note.blocks} />
       </div>
     </div>
   );

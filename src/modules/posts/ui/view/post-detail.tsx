@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { type FC, use } from "react";
 import { PageTitle } from "@/components/ui/PageTitle";
 import type { Post } from "@/modules/notion/types";
-import { BlockRenderer } from "@/modules/notion/ui/view/BlockRenderer";
+import { BlocksRenderer } from "@/modules/notion/ui/view/BlocksRenderer";
 
 /**
  * PostDetailViewコンポーネントのプロパティ。
@@ -34,9 +34,7 @@ export const PostDetailView: FC<PostDetailViewProps> = ({ postPromise }) => {
           className="mb-6 flex flex-col gap-3"
         />
         <div>
-          {post.blocks.map((block, i) => (
-            <BlockRenderer key={`${block.type}-${i}`} block={block} />
-          ))}
+          <BlocksRenderer blocks={post.blocks} />
         </div>
       </article>
     </div>

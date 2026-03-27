@@ -32,6 +32,7 @@ export type ParagraphBlock = {
 export type HeadingBlock = {
   type: "heading";
   level: 1 | 2 | 3;
+  is_toggleable: boolean;
   children: RichText[];
 };
 
@@ -62,11 +63,19 @@ export type QuoteBlock = {
 };
 
 /**
+ * 区切り線ブロックを表す型
+ */
+export type DividerBlock = {
+  type: "divider";
+};
+
+/**
  * 箇条書きリストアイテムブロックを表す型
  */
 export type BulletedListItemBlock = {
   type: "bulleted_list_item";
   children: RichText[];
+  nestedBlocks: Block[];
 };
 
 /**
@@ -75,6 +84,7 @@ export type BulletedListItemBlock = {
 export type NumberedListItemBlock = {
   type: "numbered_list_item";
   children: RichText[];
+  nestedBlocks: Block[];
 };
 
 /**
@@ -86,8 +96,14 @@ export type Block =
   | CodeBlock
   | ImageBlock
   | QuoteBlock
+  | DividerBlock
   | BulletedListItemBlock
   | NumberedListItemBlock;
+
+export type NonListBlock = Exclude<
+  Block,
+  { type: "bulleted_list_item" | "numbered_list_item" }
+>;
 
 /**
  * 投稿を表す型

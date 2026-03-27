@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { FC } from "react";
-import type { Block } from "@/modules/notion/types";
+import type { NonListBlock } from "@/modules/notion/types";
 import { RichText } from "@/modules/notion/ui/view/RichText";
 
 /**
@@ -8,7 +8,7 @@ import { RichText } from "@/modules/notion/ui/view/RichText";
  */
 export type BlockRendererProps = {
   /** レンダリングするブロック */
-  block: Block;
+  block: NonListBlock;
 };
 
 /**
@@ -28,9 +28,13 @@ export const BlockRenderer: FC<BlockRendererProps> = ({ block }) => {
       );
     case "heading": {
       const Tag = `h${block.level}` as "h1" | "h2" | "h3";
-      const sizes = { 1: "text-3xl", 2: "text-2xl", 3: "text-xl" };
+      const styles = {
+        1: "text-2xl font-bold mt-10 mb-4 tracking-wide",
+        2: "text-xl font-bold mt-8 mb-3 tracking-wide",
+        3: "text-lg font-semibold mt-6 mb-2 tracking-wide",
+      } as const;
       return (
-        <Tag className={`${sizes[block.level]} font-bold my-4`}>
+        <Tag className={styles[block.level]}>
           <RichText texts={block.children} />
         </Tag>
       );
@@ -61,21 +65,13 @@ export const BlockRenderer: FC<BlockRendererProps> = ({ block }) => {
       );
     case "quote":
       return (
-        <blockquote className="border-l-4 border-gray-300 pl-4 my-4 italic">
+        <blockquote className="border-l-2 border-gray-400 pl-5 py-1 my-6 text-gray-700 italic">
           <RichText texts={block.children} />
         </blockquote>
       );
-    case "bulleted_list_item":
-      return (
-        <li className="ml-6 list-disc">
-          <RichText texts={block.children} />
-        </li>
-      );
-    case "numbered_list_item":
-      return (
-        <li className="ml-6 list-decimal">
-          <RichText texts={block.children} />
-        </li>
-      );
+    case "divider":
+      return <hr className="my-8 border-t border-gray-200" />;
+    default:
+      return null;
   }
 };

@@ -184,11 +184,30 @@ describe("parseBlock", () => {
       expect(result).toEqual({
         type: "heading",
         level: 1,
+        is_toggleable: false,
         children: expect.any(Array),
       });
       if (result?.type === "heading") {
         expect(result.children[0].text).toBe("Heading 1");
       }
+    });
+
+    it("heading_1 の is_toggleable が true の場合も正しく変換する", () => {
+      const block = createBlock("heading_1", {
+        heading_1: {
+          rich_text: [createRichText("トグル見出し")],
+          is_toggleable: true,
+          color: "default",
+        },
+      });
+
+      const result = parseBlock(block);
+
+      expect(result).toMatchObject({
+        type: "heading",
+        level: 1,
+        is_toggleable: true,
+      });
     });
 
     it("heading_2をパースできる", () => {
@@ -205,6 +224,7 @@ describe("parseBlock", () => {
       expect(result).toEqual({
         type: "heading",
         level: 2,
+        is_toggleable: false,
         children: expect.any(Array),
       });
     });
@@ -223,6 +243,7 @@ describe("parseBlock", () => {
       expect(result).toEqual({
         type: "heading",
         level: 3,
+        is_toggleable: false,
         children: expect.any(Array),
       });
     });
@@ -331,6 +352,18 @@ describe("parseBlock", () => {
     });
   });
 
+  describe("divider", () => {
+    it("divider ブロックが正しく変換される", () => {
+      const block = createBlock("divider", {
+        divider: {},
+      });
+
+      const result = parseBlock(block);
+
+      expect(result).toEqual({ type: "divider" });
+    });
+  });
+
   describe("list items", () => {
     it("箇条書きリストをパースできる", () => {
       const block = createBlock("bulleted_list_item", {
@@ -345,6 +378,7 @@ describe("parseBlock", () => {
       expect(result).toEqual({
         type: "bulleted_list_item",
         children: expect.any(Array),
+        nestedBlocks: [],
       });
     });
 
@@ -361,14 +395,71 @@ describe("parseBlock", () => {
       expect(result).toEqual({
         type: "numbered_list_item",
         children: expect.any(Array),
+        nestedBlocks: [],
+      });
+    });
+
+    it("rawChildren が渡された場合、bulleted_list_item の nestedBlocks に再帰的に変換される", () => {
+      const block = createBlock("bulleted_list_item", {
+        bulleted_list_item: {
+          rich_text: [createRichText("親テキスト")],
+          color: "default",
+        },
+      });
+
+      const childBlock = createBlock("bulleted_list_item", {
+        bulleted_list_item: {
+          rich_text: [createRichText("子テキスト")],
+          color: "default",
+        },
+      });
+
+      const result = parseBlock(block, [childBlock]);
+
+      expect(result).toMatchObject({
+        type: "bulleted_list_item",
+        nestedBlocks: [
+          expect.objectContaining({
+            type: "bulleted_list_item",
+            children: [expect.objectContaining({ text: "子テキスト" })],
+          }),
+        ],
+      });
+    });
+
+    it("rawChildren が渡された場合、numbered_list_item の nestedBlocks に再帰的に変換される", () => {
+      const block = createBlock("numbered_list_item", {
+        numbered_list_item: {
+          rich_text: [createRichText("親テキスト")],
+          color: "default",
+        },
+      });
+
+      const childBlock = createBlock("numbered_list_item", {
+        numbered_list_item: {
+          rich_text: [createRichText("子テキスト")],
+          color: "default",
+        },
+      });
+
+      const result = parseBlock(block, [childBlock]);
+
+      expect(result).toMatchObject({
+        type: "numbered_list_item",
+        nestedBlocks: [
+          expect.objectContaining({
+            type: "numbered_list_item",
+            children: [expect.objectContaining({ text: "子テキスト" })],
+          }),
+        ],
       });
     });
   });
 
   describe("unsupported blocks", () => {
     it("サポート外のブロックタイプはnullを返す", () => {
-      const block = createBlock("divider", {
-        divider: {},
+      const block = createBlock("table_of_contents", {
+        table_of_contents: { color: "default" },
       });
 
       const result = parseBlock(block);

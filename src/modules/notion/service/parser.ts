@@ -39,15 +39,18 @@ export function parseRichText(richTexts: RichTextItemResponse[]): RichText[] {
  * heading_1, heading_2, heading_3の共通処理を統合します。
  * @param richText - 見出しのリッチテキスト
  * @param level - 見出しレベル（1, 2, 3）
+ * @param is_toggleable - トグル見出しかどうか
  * @returns HeadingBlock
  */
 function parseHeadingBlock(
   richText: RichTextItemResponse[],
   level: 1 | 2 | 3,
+  is_toggleable: boolean,
 ): Block {
   return {
     type: "heading",
     level,
+    is_toggleable,
     children: parseRichText(richText),
   };
 }
@@ -55,9 +58,13 @@ function parseHeadingBlock(
 /**
  * NotionブロックをアプリケーションのBlock型にパースします。
  * @param block - Notion APIから取得したブロックオブジェクト
+ * @param rawChildren - ネストされた子ブロック（リストアイテム用）
  * @returns パース済みBlock、またはサポート外のブロックタイプの場合null
  */
-export function parseBlock(block: BlockObjectResponse): Block | null {
+export function parseBlock(
+  block: BlockObjectResponse,
+  rawChildren?: BlockObjectResponse[],
+): Block | null {
   switch (block.type) {
     case "paragraph":
       return {
@@ -65,11 +72,23 @@ export function parseBlock(block: BlockObjectResponse): Block | null {
         children: parseRichText(block.paragraph.rich_text),
       };
     case "heading_1":
-      return parseHeadingBlock(block.heading_1.rich_text, 1);
+      return parseHeadingBlock(
+        block.heading_1.rich_text,
+        1,
+        block.heading_1.is_toggleable,
+      );
     case "heading_2":
-      return parseHeadingBlock(block.heading_2.rich_text, 2);
+      return parseHeadingBlock(
+        block.heading_2.rich_text,
+        2,
+        block.heading_2.is_toggleable,
+      );
     case "heading_3":
-      return parseHeadingBlock(block.heading_3.rich_text, 3);
+      return parseHeadingBlock(
+        block.heading_3.rich_text,
+        3,
+        block.heading_3.is_toggleable,
+      );
     case "code":
       return {
         type: "code",
@@ -92,15 +111,27 @@ export function parseBlock(block: BlockObjectResponse): Block | null {
         type: "quote",
         children: parseRichText(block.quote.rich_text),
       };
+    case "divider":
+      return { type: "divider" };
     case "bulleted_list_item":
       return {
         type: "bulleted_list_item",
         children: parseRichText(block.bulleted_list_item.rich_text),
+        nestedBlocks: rawChildren
+          ? rawChildren
+              .map((child) => parseBlock(child))
+              .filter((b): b is Block => b !== null)
+          : [],
       };
     case "numbered_list_item":
       return {
         type: "numbered_list_item",
         children: parseRichText(block.numbered_list_item.rich_text),
+        nestedBlocks: rawChildren
+          ? rawChildren
+              .map((child) => parseBlock(child))
+              .filter((b): b is Block => b !== null)
+          : [],
       };
     default:
       return null;
