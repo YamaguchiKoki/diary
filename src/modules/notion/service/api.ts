@@ -177,7 +177,7 @@ export async function getReadingNotes(options?: {
     sorts: [
       {
         property: "created_at",
-        direction: "descending",
+        direction: "ascending",
       },
     ],
   });
