@@ -20,19 +20,6 @@ export function TopicFilter({ topics }: TopicFilterProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <Link
-        href={routes.books.index()}
-        className={cn(
-          "group flex items-center justify-between rounded-lg p-2",
-          isOnBooksPage && !currentTopic ? "bg-gray-200" : "hover:bg-gray-200",
-        )}
-      >
-        <span className="flex items-center gap-2">
-          <TagIcon size={16} />
-          <span className="font-medium">All</span>
-        </span>
-      </Link>
-
       {topics.map((topic) => {
         const isActive = isOnBooksPage && currentTopic === topic;
         return (
@@ -41,7 +28,7 @@ export function TopicFilter({ topics }: TopicFilterProps) {
             href={routes.books.index(topic)}
             className={cn(
               "group flex items-center justify-between rounded-lg p-2",
-              isActive ? "bg-gray-200" : "hover:bg-gray-200",
+              isActive ? "bg-primary text-white" : "hover:bg-gray-200",
             )}
           >
             <span className="flex items-center gap-2">

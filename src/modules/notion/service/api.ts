@@ -235,23 +235,11 @@ export async function getAllTopics(): Promise<string[]> {
   cacheTag("reading-notes", "reading-notes-topics");
   cacheLife("hours");
 
-  const response = await notion.dataSources.query({
-    data_source_id: env.NOTION_READING_NOTES_DATABASE_ID,
-    filter: {
-      property: "is_public",
-      checkbox: { equals: true },
-    },
-  });
-
+  const notes = await getReadingNotes();
   const topicsSet = new Set<string>();
-  for (const page of response.results) {
-    if (page.object === "page" && "properties" in page) {
-      const topicProp = page.properties.topic;
-      if (topicProp?.type === "multi_select") {
-        for (const topic of topicProp.multi_select) {
-          topicsSet.add(topic.name);
-        }
-      }
+  for (const note of notes) {
+    for (const topic of note.topics) {
+      topicsSet.add(topic);
     }
   }
 

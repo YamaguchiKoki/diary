@@ -16,21 +16,21 @@ describe("TopicFilter", () => {
       get: vi.fn().mockReturnValue(null),
     } as unknown as ReadonlyURLSearchParams);
   });
-  it("All とトピック一覧が表示される", () => {
+  it("トピック一覧が表示される（Allは表示されない）", () => {
     const topics = ["プログラミング", "技術書", "ビジネス"];
 
     render(<TopicFilter topics={topics} />);
 
-    expect(screen.getByText("All")).toBeInTheDocument();
+    expect(screen.queryByText("All")).not.toBeInTheDocument();
     expect(screen.getByText("プログラミング")).toBeInTheDocument();
     expect(screen.getByText("技術書")).toBeInTheDocument();
     expect(screen.getByText("ビジネス")).toBeInTheDocument();
   });
 
-  it("トピックが空の場合はAllのみ表示される", () => {
+  it("トピックが空の場合はリンクが表示されない", () => {
     render(<TopicFilter topics={[]} />);
 
-    expect(screen.getByText("All")).toBeInTheDocument();
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
   });
 
   it("トピックの数だけリンクが表示される", () => {
@@ -39,8 +39,7 @@ describe("TopicFilter", () => {
     render(<TopicFilter topics={topics} />);
 
     const links = screen.getAllByRole("link");
-    // All + トピックの数
-    expect(links.length).toBe(topics.length + 1);
+    expect(links.length).toBe(topics.length);
   });
 
   it("各トピックが正しいURLを持つ", () => {
@@ -48,10 +47,8 @@ describe("TopicFilter", () => {
 
     render(<TopicFilter topics={topics} />);
 
-    const allLink = screen.getByText("All").closest("a");
     const topicLink = screen.getByText("プログラミング").closest("a");
 
-    expect(allLink).toHaveAttribute("href", "/books");
     expect(topicLink).toHaveAttribute(
       "href",
       "/books?topic=%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0",
@@ -60,7 +57,6 @@ describe("TopicFilter", () => {
 
   it("選択中のトピックがアクティブ状態で表示される", () => {
     vi.mocked(usePathname).mockReturnValue("/books");
-    // トピックが選択されている状態をモック
     vi.mocked(useSearchParams).mockReturnValue({
       get: vi.fn().mockReturnValue("プログラミング"),
     } as unknown as ReadonlyURLSearchParams);
@@ -72,25 +68,19 @@ describe("TopicFilter", () => {
     const programmingLink = screen.getByText("プログラミング").closest("a");
     const techBookLink = screen.getByText("技術書").closest("a");
 
-    // プログラミングがアクティブ
-    expect(programmingLink).toHaveClass("bg-gray-200");
-    // 技術書は非アクティブ
-    expect(techBookLink).not.toHaveClass("bg-gray-200");
+    expect(programmingLink).toHaveClass("bg-primary", "text-white");
+    expect(techBookLink).not.toHaveClass("bg-primary");
   });
 
-  it("トピックが選択されていない場合はAllがアクティブ", () => {
+  it("トピックが選択されていない場合はどのトピックもアクティブでない", () => {
     vi.mocked(usePathname).mockReturnValue("/books");
 
     const topics = ["プログラミング"];
 
     render(<TopicFilter topics={topics} />);
 
-    const allLink = screen.getByText("All").closest("a");
     const topicLink = screen.getByText("プログラミング").closest("a");
 
-    // Allがアクティブ
-    expect(allLink).toHaveClass("bg-gray-200");
-    // トピックは非アクティブ
-    expect(topicLink).not.toHaveClass("bg-gray-200");
+    expect(topicLink).not.toHaveClass("bg-primary");
   });
 });
