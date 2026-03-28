@@ -30,7 +30,7 @@ export function ReadingNoteDetailView({ note }: ReadingNoteDetailViewProps) {
                 {note.topics.map((topic) => (
                   <Link
                     key={topic}
-                    href={routes.books.index(topic)}
+                    href={routes.books.topic(topic)}
                     className="text-sm bg-gray-100 text-gray-700 px-3 py-1 rounded-full hover:bg-gray-200 transition-colors"
                   >
                     {topic}

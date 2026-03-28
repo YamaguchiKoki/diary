@@ -1,21 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import type { ReadonlyURLSearchParams } from "next/navigation";
-import { usePathname, useSearchParams } from "next/navigation";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { TopicFilter } from "../TopicFilter";
 
-// next/navigationのモック
-vi.mock("next/navigation");
-
 describe("TopicFilter", () => {
-  beforeEach(() => {
-    // デフォルトのパスを設定
-    vi.mocked(usePathname).mockReturnValue("/books");
-    // デフォルトのSearchParamsを設定（トピックなし）
-    vi.mocked(useSearchParams).mockReturnValue({
-      get: vi.fn().mockReturnValue(null),
-    } as unknown as ReadonlyURLSearchParams);
-  });
   it("トピック一覧が表示される（Allは表示されない）", () => {
     const topics = ["プログラミング", "技術書", "ビジネス"];
 
@@ -51,19 +38,14 @@ describe("TopicFilter", () => {
 
     expect(topicLink).toHaveAttribute(
       "href",
-      "/books?topic=%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0",
+      "/books/topic/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0",
     );
   });
 
   it("選択中のトピックがアクティブ状態で表示される", () => {
-    vi.mocked(usePathname).mockReturnValue("/books");
-    vi.mocked(useSearchParams).mockReturnValue({
-      get: vi.fn().mockReturnValue("プログラミング"),
-    } as unknown as ReadonlyURLSearchParams);
-
     const topics = ["プログラミング", "技術書"];
 
-    render(<TopicFilter topics={topics} />);
+    render(<TopicFilter topics={topics} activeTopic="プログラミング" />);
 
     const programmingLink = screen.getByText("プログラミング").closest("a");
     const techBookLink = screen.getByText("技術書").closest("a");
@@ -73,8 +55,6 @@ describe("TopicFilter", () => {
   });
 
   it("トピックが選択されていない場合はどのトピックもアクティブでない", () => {
-    vi.mocked(usePathname).mockReturnValue("/books");
-
     const topics = ["プログラミング"];
 
     render(<TopicFilter topics={topics} />);

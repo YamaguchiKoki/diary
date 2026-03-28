@@ -7,6 +7,7 @@
  *
  * routes.home()                      // "/"
  * routes.books.index()               // "/books"
+ * routes.books.topic("react")        // "/books/topic/react"
  * routes.books.detail("abc123")      // "/books/abc123"
  * routes.posts.year(2024)            // "/posts/2024"
  * routes.posts.detail(2024, "id")    // "/posts/2024/id"
@@ -31,13 +32,16 @@ export const routes = {
   books: {
     /**
      * 読書メモ一覧ページへのルート
-     * @param topic - フィルタリングするトピック（オプション）
      * @returns 読書メモ一覧のパス
      */
-    index: (topic?: string) => {
-      const base = "/books";
-      return topic ? `${base}?topic=${encodeURIComponent(topic)}` : base;
-    },
+    index: () => "/books" as const,
+    /**
+     * トピック別の読書メモ一覧ページへのルート
+     * @param topic - フィルタリングするトピック
+     * @returns トピック別読書メモ一覧のパス
+     */
+    topic: (topic: string) =>
+      `/books/topic/${encodeURIComponent(topic)}` as const,
     /**
      * 読書メモ詳細ページへのルート
      * @param id - 読書メモのID
@@ -82,4 +86,12 @@ export type PostDetailParams = {
   year: string;
   /** 投稿ID */
   id: string;
+};
+
+/**
+ * 読書メモトピックページのパラメータ型
+ */
+export type BookTopicParams = {
+  /** トピック */
+  topic: string;
 };
