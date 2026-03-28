@@ -1,5 +1,7 @@
 import { Suspense } from "react";
+import { ErrorBoundary } from "@/components/layouts/ErrorBoundary";
 import { SideMenu } from "@/components/ui/SideMenu";
+import { Spinner } from "@/components/ui/spinner";
 import { TopicFilter } from "@/modules/books/ui/view/TopicFilter";
 import { getAllTopics } from "@/modules/notion/service/api";
 
@@ -16,13 +18,17 @@ export default function BooksLayout({
   return (
     <div className="flex">
       <SideMenu title="Topics" isInner>
-        <Suspense
-          fallback={
-            <div className="p-2 text-sm text-gray-500">読み込み中...</div>
-          }
-        >
-          <TopicFilterSection />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense
+            fallback={
+              <div className="flex justify-center p-4">
+                <Spinner className="size-5" />
+              </div>
+            }
+          >
+            <TopicFilterSection />
+          </Suspense>
+        </ErrorBoundary>
       </SideMenu>
 
       <div className="flex-1">{children}</div>

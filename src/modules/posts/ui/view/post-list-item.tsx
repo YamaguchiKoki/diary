@@ -1,3 +1,5 @@
+"use client";
+
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

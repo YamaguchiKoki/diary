@@ -1,22 +1,14 @@
-import { notFound } from "next/navigation";
-import { type FC, use } from "react";
+import type { FC } from "react";
 import { FloatingHeader } from "@/components/ui/FloatingHeader";
-import type { Post } from "@/modules/notion/types";
 
 type PostDetailHeaderProps = {
-  postPromise: Promise<Post | null>;
+  title: string;
   goBackLink: string;
 };
 
 export const PostDetailHeader: FC<PostDetailHeaderProps> = ({
-  postPromise,
+  title,
   goBackLink,
 }) => {
-  const post = use(postPromise);
-
-  if (!post) {
-    notFound();
-  }
-
-  return <FloatingHeader scrollTitle={post.title} goBackLink={goBackLink} />;
+  return <FloatingHeader scrollTitle={title} goBackLink={goBackLink} />;
 };

@@ -1,49 +1,27 @@
-import { type FC, Suspense } from "react";
-import { ErrorBoundary } from "@/components/layouts/ErrorBoundary";
+import { notFound } from "next/navigation";
 import { getPost } from "@/modules/notion/service/api";
-import type { Post } from "@/modules/notion/types";
-import {
-  PostDetailView,
-  PostDetailViewSkelton,
-} from "@/modules/posts/ui/view/post-detail";
+import { PostDetailView } from "@/modules/posts/ui/view/post-detail";
+import { PostDetailHeader } from "@/modules/posts/ui/view/post-detail-header";
 
-/**
- * PostDetailSectionコンポーネントのプロパティ。
- */
 export type PostDetailSectionProps = {
-  /** 投稿のID */
   postId: string;
-  /** 投稿詳細のPromise（外部から渡す場合） */
-  postPromise?: Promise<Post | null>;
+  goBackLink: string;
 };
 
-/**
- * 投稿詳細を表示するSectionコンポーネント。
- * データ取得、エラーハンドリング、サスペンスを担当します。
- *
- * @param props - コンポーネントのプロパティ
- * @returns 投稿詳細のSection
- *
- * @example
- * // 内部でデータを取得する場合
- * <PostDetailSection postId="abc123" />
- *
- * @example
- * // 外部からPromiseを渡す場合（Promise共有）
- * const postPromise = getPost("abc123");
- * <PostDetailSection postId="abc123" postPromise={postPromise} />
- */
-export const PostDetailSection: FC<PostDetailSectionProps> = ({
+export async function PostDetailSection({
   postId,
-  postPromise,
-}) => {
-  const promise = postPromise ?? getPost(postId);
+  goBackLink,
+}: PostDetailSectionProps) {
+  const post = await getPost(postId);
+
+  if (!post) {
+    notFound();
+  }
 
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<PostDetailViewSkelton />}>
-        <PostDetailView postPromise={promise} />
-      </Suspense>
-    </ErrorBoundary>
+    <>
+      <PostDetailHeader title={post.title} goBackLink={goBackLink} />
+      <PostDetailView post={post} />
+    </>
   );
-};
+}

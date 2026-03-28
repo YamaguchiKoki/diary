@@ -1,30 +1,13 @@
-import { notFound } from "next/navigation";
-import { type FC, use } from "react";
+import type { FC } from "react";
 import { PageTitle } from "@/components/ui/PageTitle";
 import type { Post } from "@/modules/notion/types";
 import { BlocksRenderer } from "@/modules/notion/ui/view/BlocksRenderer";
 
-/**
- * PostDetailViewコンポーネントのプロパティ。
- */
 export type PostDetailViewProps = {
-  /** 投稿詳細を取得するPromise */
-  postPromise: Promise<Post | null>;
+  post: Post;
 };
 
-/**
- * 投稿詳細を表示するViewコンポーネント。
- *
- * @param props - コンポーネントのプロパティ
- * @returns 投稿詳細の表示
- */
-export const PostDetailView: FC<PostDetailViewProps> = ({ postPromise }) => {
-  const post = use(postPromise);
-
-  if (!post) {
-    notFound();
-  }
-
+export const PostDetailView: FC<PostDetailViewProps> = ({ post }) => {
   return (
     <div className="content-wrapper @container/writing px-4 lg:py-20 lg:px-16">
       <article className="content">
@@ -39,8 +22,4 @@ export const PostDetailView: FC<PostDetailViewProps> = ({ postPromise }) => {
       </article>
     </div>
   );
-};
-
-export const PostDetailViewSkelton = () => {
-  return <p>loading</p>;
 };
