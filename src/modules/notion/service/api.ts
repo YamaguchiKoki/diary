@@ -28,7 +28,7 @@ import type { Block, Post } from "../types";
 export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
   "use cache";
   cacheTag("posts", "posts-all");
-  cacheLife("hours");
+  cacheLife("cms");
 
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
@@ -59,7 +59,7 @@ export async function getPosts(): Promise<Omit<Post, "blocks">[]> {
 export async function getPost(id: string): Promise<Post | null> {
   "use cache";
   cacheTag("posts", `posts-${id}`);
-  cacheLife("days");
+  cacheLife("cms");
 
   try {
     const page = await notion.pages.retrieve({ page_id: id });
@@ -99,7 +99,7 @@ export async function getPostsByYear(
 ): Promise<Omit<Post, "blocks">[]> {
   "use cache";
   cacheTag("posts", `posts-${year}`);
-  cacheLife("hours");
+  cacheLife("cms");
 
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
@@ -166,7 +166,7 @@ export async function getReadingNotes(options?: {
 }): Promise<ReadingNoteForListView[]> {
   "use cache";
   cacheTag("reading-notes", "reading-notes-all");
-  cacheLife("hours");
+  cacheLife("cms");
 
   const response = await notion.dataSources.query({
     data_source_id: env.NOTION_READING_NOTES_DATABASE_ID,
@@ -197,7 +197,7 @@ export async function getReadingNotes(options?: {
 export async function getReadingNote(id: string): Promise<ReadingNote | null> {
   "use cache";
   cacheTag("reading-notes", `reading-note-${id}`);
-  cacheLife("days");
+  cacheLife("cms");
 
   try {
     const [page, blocksResponse] = await Promise.all([
@@ -233,7 +233,7 @@ export async function getReadingNote(id: string): Promise<ReadingNote | null> {
 export async function getAllTopics(): Promise<string[]> {
   "use cache";
   cacheTag("reading-notes", "reading-notes-topics");
-  cacheLife("hours");
+  cacheLife("cms");
 
   const notes = await getReadingNotes();
   const topicsSet = new Set<string>();

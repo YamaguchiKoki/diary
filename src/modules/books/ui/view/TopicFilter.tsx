@@ -1,31 +1,22 @@
-"use client";
-
 import { TagIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 interface TopicFilterProps {
   topics: string[];
+  activeTopic?: string;
 }
 
-export function TopicFilter({ topics }: TopicFilterProps) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentTopic = searchParams.get("topic");
-
-  // パスが/booksでない場合は、アクティブ判定しない
-  const isOnBooksPage = pathname === "/books";
-
+export function TopicFilter({ topics, activeTopic }: TopicFilterProps) {
   return (
     <div className="flex flex-col gap-1">
       {topics.map((topic) => {
-        const isActive = isOnBooksPage && currentTopic === topic;
+        const isActive = activeTopic === topic;
         return (
           <Link
             key={topic}
-            href={routes.books.index(topic)}
+            href={routes.books.topic(topic)}
             className={cn(
               "group flex items-center justify-between rounded-lg p-2",
               isActive ? "bg-primary text-white" : "hover:bg-gray-200",
