@@ -50,4 +50,21 @@ describe("ReadingNoteListView", () => {
       expect(screen.getByText(note.title)).toBeInTheDocument();
     }
   });
+
+  it("グリッドレイアウトで表示される", () => {
+    const notes = [
+      {
+        id: "1",
+        title: "テスト読書メモ1",
+        topics: ["プログラミング"],
+        createdAt: "2024-01-01",
+        isPublic: true,
+      },
+    ];
+
+    const { container } = render(<ReadingNoteListView notes={notes} />);
+
+    const grid = container.firstElementChild;
+    expect(grid).toHaveClass("grid");
+  });
 });
