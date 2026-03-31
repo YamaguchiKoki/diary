@@ -12,9 +12,23 @@
       "Bash(test:*)",
       "Bash(npm install:*)",
       "Bash(npm run test:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "Bash(git commit:*)",
+      "Bash(find /Users/kokiyamaguchi/Documents/projects/git/personal/github.com/YamaguchiKoki/diary/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec wc -l {} +)",
+      "Bash(npm run:*)",
+      "mcp__chrome-devtools__emulate"
     ]
   },
+  "enabledMcpjsonServers": [
+    "chrome-devtools",
+    "context7",
+    "playwright"
+  ],
   "hooks": {
     "PostToolUse": [
       {
@@ -35,6 +49,5 @@
         ]
       }
     ]
-  },
-  "enabledMcpjsonServers": ["chrome-devtools", "context7", "playwright"]
+  }
 }

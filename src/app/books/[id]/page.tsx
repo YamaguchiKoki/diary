@@ -1,3 +1,5 @@
+import { ScrollArea } from "@/components/layouts/ScrollArea";
+import { routes } from "@/lib/routes";
 import { ReadingNoteDetailSection } from "@/modules/books/ui/section/ReadingNoteDetailSection";
 import { getReadingNotes } from "@/modules/notion/service/api";
 
@@ -17,5 +19,9 @@ export async function generateStaticParams() {
 export default async function BookDetailPage({ params }: BookDetailPageProps) {
   const { id } = await params;
 
-  return <ReadingNoteDetailSection noteId={id} />;
+  return (
+    <ScrollArea className="bg-white h-screen overflow-y-auto" useScrollAreaId>
+      <ReadingNoteDetailSection noteId={id} goBackLink={routes.books.index()} />
+    </ScrollArea>
+  );
 }

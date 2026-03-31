@@ -51,7 +51,7 @@ describe("ReadingNoteListView", () => {
     }
   });
 
-  it("グリッドレイアウトで表示される", () => {
+  it("レスポンシブな一覧レイアウトで表示される", () => {
     const notes = [
       {
         id: "1",
@@ -64,7 +64,7 @@ describe("ReadingNoteListView", () => {
 
     const { container } = render(<ReadingNoteListView notes={notes} />);
 
-    const grid = container.firstElementChild;
-    expect(grid).toHaveClass("grid");
+    const list = container.firstElementChild;
+    expect(list).toHaveClass("flex", "flex-col", "lg:grid", "lg:grid-cols-2");
   });
 });
