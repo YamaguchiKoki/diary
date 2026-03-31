@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { ReadingNoteForListView } from "@/modules/books/types";
 import { ReadingNoteListItem } from "./ReadingNoteListItem";
 
@@ -15,7 +16,7 @@ export function ReadingNoteListView({ notes }: ReadingNoteListViewProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className={cn("flex flex-col", "lg:grid lg:grid-cols-2 lg:gap-4")}>
       {notes.map((note) => (
         <ReadingNoteListItem key={note.id} note={note} />
       ))}

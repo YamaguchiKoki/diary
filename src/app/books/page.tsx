@@ -1,9 +1,17 @@
-import { ReadingNoteListSection } from "@/modules/books/ui/section/ReadingNoteListSection";
+import { ScrollArea } from "@/components/layouts/ScrollArea";
+import { FloatingHeader } from "@/components/ui/FloatingHeader";
+import { TopicFilter } from "@/modules/books/ui/view/TopicFilter";
+import { getAllTopics } from "@/modules/notion/service/api";
 
-export default function BooksPage() {
+export default async function BooksPage() {
+  const topics = await getAllTopics();
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <ReadingNoteListSection />
-    </div>
+    <ScrollArea className="bg-white h-screen overflow-x-hidden overflow-y-auto">
+      <FloatingHeader title="読書メモ" />
+      <div className="px-4 py-4 lg:hidden">
+        <TopicFilter topics={topics} />
+      </div>
+    </ScrollArea>
   );
 }

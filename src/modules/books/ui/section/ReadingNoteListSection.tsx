@@ -14,10 +14,11 @@ export async function ReadingNoteListSection({
   return (
     <>
       <PageTitle
-        title={topic ? `読書メモ: ${topic}` : "読書メモ"}
+        title={topic ?? "読書メモ"}
         subtitle={
           <p className="text-gray-600 mt-2">{notes.length}件の読書メモ</p>
         }
+        className="px-4 lg:px-0"
       />
       <ReadingNoteListView notes={notes} />
     </>

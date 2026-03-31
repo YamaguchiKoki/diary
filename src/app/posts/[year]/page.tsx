@@ -13,7 +13,9 @@ export default async function YearPage({ params }: Props) {
   return (
     <ScrollArea className="lg:hidden">
       <FloatingHeader title={`${year}年の日記`} />
-      <PostListSection year={year} isMobile />
+      <div className="py-4">
+        <PostListSection year={year} isMobile />
+      </div>
     </ScrollArea>
   );
 }

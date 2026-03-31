@@ -9,7 +9,7 @@ export type PostDetailViewProps = {
 
 export const PostDetailView: FC<PostDetailViewProps> = ({ post }) => {
   return (
-    <div className="content-wrapper @container/writing px-4 lg:py-20 lg:px-16">
+    <div className="content-wrapper @container/writing px-4 py-8 lg:py-20 lg:px-16">
       <article className="content">
         <PageTitle
           title={post.title}
