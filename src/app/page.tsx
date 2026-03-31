@@ -9,10 +9,10 @@ export default async function Home() {
     <ScrollArea useScrollAreaId className="lg:px-8">
       <FloatingHeader title="このサイトについて" className="" />
       <Spacer />
-      <PageTitle title="このサイトについて" subtitle />
-      <div className="flex flex-col gap-y-4">
-        <section>
-          <h2 className="text-2xl font-bold mb-4">
+      <section className="px-4">
+        <PageTitle title="このサイトについて" subtitle />
+        <div className="flex flex-col gap-y-4 ">
+          <h2 className="text-2xl font-bold">
             <Highlighter action="underline" color="#0000ff" multiline={false}>
               やること
             </Highlighter>
@@ -34,9 +34,7 @@ export default async function Home() {
               <p>１週間に１回は投稿します。</p>
             </li>
           </ul>
-        </section>
-        <section>
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold">
             <Highlighter action="underline" color="#0000ff" multiline={false}>
               やらないこと
             </Highlighter>
@@ -52,8 +50,8 @@ export default async function Home() {
               <p>各投稿間の連続性は意識しません。</p>
             </li>
           </ul>
-        </section>
-      </div>
+        </div>
+      </section>
     </ScrollArea>
   );
 }
