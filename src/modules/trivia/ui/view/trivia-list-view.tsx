@@ -17,15 +17,14 @@ export function TriviaListView({ triviaList }: TriviaListViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
-  const preparedCards = useMemo(
-    () =>
-      triviaList.map((t) => ({
-        id: t.id,
-        title: t.title,
-        prepared: prepare(t.title, MASONRY_CONFIG.font),
-      })),
-    [triviaList],
-  );
+  const preparedCards = useMemo(() => {
+    if (typeof window === "undefined") return [];
+    return triviaList.map((t) => ({
+      id: t.id,
+      title: t.title,
+      prepared: prepare(t.title, MASONRY_CONFIG.font),
+    }));
+  }, [triviaList]);
 
   useEffect(() => {
     const el = containerRef.current;
