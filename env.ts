@@ -9,6 +9,9 @@ export const env = createEnv({
     NOTION_READING_NOTES_DATABASE_ID: z
       .uuid()
       .describe("Notion reading notes data source ID"),
+    NOTION_TRIVIA_DATA_SOURCE_ID: z
+      .uuid()
+      .describe("Notion trivia data source ID"),
   },
   client: {},
   runtimeEnv: {
@@ -17,5 +20,6 @@ export const env = createEnv({
     NOTION_DATA_SOURCE_ID: process.env.NOTION_DATA_SOURCE_ID,
     NOTION_READING_NOTES_DATABASE_ID:
       process.env.NOTION_READING_NOTES_DATABASE_ID,
+    NOTION_TRIVIA_DATA_SOURCE_ID: process.env.NOTION_TRIVIA_DATA_SOURCE_ID,
   },
 });

@@ -11,6 +11,8 @@
  * routes.books.detail("abc123")      // "/books/abc123"
  * routes.posts.year(2024)            // "/posts/2024"
  * routes.posts.detail(2024, "id")    // "/posts/2024/id"
+ * routes.trivia.index()              // "/trivia"
+ * routes.trivia.detail("abc123")     // "/trivia/abc123"
  */
 
 type Year = number;
@@ -67,6 +69,23 @@ export const routes = {
      * @returns 投稿詳細のパス
      */
     detail: (year: Year, id: PostId) => `/posts/${year}/${id}` as const,
+  },
+
+  /**
+   * 豆知識関連のルート
+   */
+  trivia: {
+    /**
+     * 豆知識一覧ページへのルート
+     * @returns 豆知識一覧のパス
+     */
+    index: () => "/trivia" as const,
+    /**
+     * 豆知識詳細ページへのルート
+     * @param id - 豆知識のID
+     * @returns 豆知識詳細のパス
+     */
+    detail: (id: string) => `/trivia/${id}` as const,
   },
 } as const;
 

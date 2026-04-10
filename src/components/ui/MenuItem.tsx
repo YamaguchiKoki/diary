@@ -1,4 +1,9 @@
-import { CalendarIcon, LibraryBig, SparklesIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  LibraryBig,
+  Lightbulb,
+  SparklesIcon,
+} from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { NavigationLink } from "@/components/ui/NavigationLink";
@@ -88,6 +93,16 @@ const getNavSections = (): NavSection[] => {
           href: routes.books.index(),
           label: "Reading",
           icon: <LibraryBig size={16} />,
+        },
+      ],
+    },
+    {
+      id: "trivia",
+      items: [
+        {
+          href: routes.trivia.index(),
+          label: "Trivia",
+          icon: <Lightbulb size={16} />,
         },
       ],
     },

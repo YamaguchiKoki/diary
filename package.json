@@ -16,6 +16,7 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@chenglou/pretext": "^0.0.5",
     "@notionhq/client": "^5.4.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@t3-oss/env-nextjs": "^0.13.8",
@@ -49,7 +50,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "babel-plugin-react-compiler": "1.0.0",
     "jsdom": "^24.0.0",
-    "knip": "^5.71.0",
+    "knip": "^4.1.0",
     "lefthook": "^2.0.8",
     "msw": "^2.7.0",
     "tailwindcss": "^4",
