@@ -14,3 +14,5 @@ pre-push:
       run: npx biome lint .
     typecheck:
       run: npx tsc --noEmit
+    build:
+      run: npm run build
