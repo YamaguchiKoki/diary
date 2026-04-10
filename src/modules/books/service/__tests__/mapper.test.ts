@@ -1,8 +1,8 @@
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { describe, expect, it } from "vitest";
-import { parseReadingNotePage } from "../parser";
+import { mapPageToReadingNote } from "../mapper";
 
-describe("parseReadingNotePage", () => {
+describe("mapPageToReadingNote", () => {
   it("正常なページオブジェクトをパースできる", () => {
     const mockPage: PageObjectResponse = {
       object: "page",
@@ -61,7 +61,7 @@ describe("parseReadingNotePage", () => {
       public_url: null,
     };
 
-    const result = parseReadingNotePage(mockPage);
+    const result = mapPageToReadingNote(mockPage);
 
     expect(result).toEqual({
       id: "test-id-123",
@@ -96,7 +96,7 @@ describe("parseReadingNotePage", () => {
       public_url: null,
     };
 
-    const result = parseReadingNotePage(mockPage);
+    const result = mapPageToReadingNote(mockPage);
 
     expect(result.title).toBe("無題");
   });
@@ -144,7 +144,7 @@ describe("parseReadingNotePage", () => {
       public_url: null,
     };
 
-    const result = parseReadingNotePage(mockPage);
+    const result = mapPageToReadingNote(mockPage);
 
     expect(result.topics).toEqual([]);
   });
@@ -196,7 +196,7 @@ describe("parseReadingNotePage", () => {
       public_url: null,
     };
 
-    const result = parseReadingNotePage(mockPage);
+    const result = mapPageToReadingNote(mockPage);
 
     expect(result.isPublic).toBe(false);
   });

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
+import { getReadingNote } from "@/modules/books/service/api";
 import { ReadingNoteDetailHeader } from "@/modules/books/ui/view/ReadingNoteDetailHeader";
 import { ReadingNoteDetailView } from "@/modules/books/ui/view/ReadingNoteDetailView";
-import { getReadingNote } from "@/modules/notion/service/api";
 
 export type ReadingNoteDetailSectionProps = {
   noteId: string;

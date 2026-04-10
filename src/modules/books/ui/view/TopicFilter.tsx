@@ -3,10 +3,10 @@ import Link from "next/link";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
-interface TopicFilterProps {
+type TopicFilterProps = {
   topics: string[];
   activeTopic?: string;
-}
+};
 
 export function TopicFilter({ topics, activeTopic }: TopicFilterProps) {
   return (

@@ -104,15 +104,3 @@ export type NonListBlock = Exclude<
   Block,
   { type: "bulleted_list_item" | "numbered_list_item" }
 >;
-
-/**
- * 投稿を表す型
- */
-export type Post = {
-  id: string;
-  title: string;
-  published: boolean;
-  publishedAt: string | null;
-  thumbnail: string | null;
-  blocks: Block[];
-};

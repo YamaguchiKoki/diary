@@ -1,5 +1,5 @@
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import type { Post } from "../types";
+import type { Post } from "@/modules/posts/types";
 
 /**
  * PageObjectResponseからタイトルを抽出します。

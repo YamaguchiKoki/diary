@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/layouts/ScrollArea";
 import { type PostDetailParams, routes } from "@/lib/routes";
 import { getYearRange } from "@/lib/utils";
-import { getPostsByYear } from "@/modules/notion/service/api";
+import { getPostsByYear } from "@/modules/posts/service/api";
 import { PostDetailSection } from "@/modules/posts/ui/section/post-detail";
 
 type Props = {

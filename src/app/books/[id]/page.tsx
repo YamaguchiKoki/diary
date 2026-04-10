@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/layouts/ScrollArea";
 import { routes } from "@/lib/routes";
+import { getReadingNotes } from "@/modules/books/service/api";
 import { ReadingNoteDetailSection } from "@/modules/books/ui/section/ReadingNoteDetailSection";
-import { getReadingNotes } from "@/modules/notion/service/api";
 
 interface BookDetailPageProps {
   params: Promise<{

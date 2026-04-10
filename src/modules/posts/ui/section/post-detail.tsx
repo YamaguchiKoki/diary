@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPost } from "@/modules/notion/service/api";
+import { getPost } from "@/modules/posts/service/api";
 import { PostDetailView } from "@/modules/posts/ui/view/post-detail";
 import { PostDetailHeader } from "@/modules/posts/ui/view/post-detail-header";
 

@@ -3,9 +3,9 @@ import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import type { ReadingNoteForListView } from "@/modules/books/types";
 
-interface ReadingNoteListItemProps {
+type ReadingNoteListItemProps = {
   note: ReadingNoteForListView;
-}
+};
 
 export function ReadingNoteListItem({ note }: ReadingNoteListItemProps) {
   return (

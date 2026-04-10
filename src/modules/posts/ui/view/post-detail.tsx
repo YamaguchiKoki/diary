@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { PageTitle } from "@/components/ui/PageTitle";
-import type { Post } from "@/modules/notion/types";
 import { BlocksRenderer } from "@/modules/notion/ui/view/BlocksRenderer";
+import type { Post } from "@/modules/posts/types";
 
 export type PostDetailViewProps = {
   post: Post;

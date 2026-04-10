@@ -1,6 +1,6 @@
 import { SideMenu } from "@/components/ui/SideMenu";
+import { getAllTopics } from "@/modules/books/service/api";
 import { TopicFilter } from "@/modules/books/ui/view/TopicFilter";
-import { getAllTopics } from "@/modules/notion/service/api";
 
 type TopicFilterSectionProps = {
   activeTopic?: string;
@@ -35,12 +35,11 @@ export default async function BooksLayout({
   const activeTopic = topic ? decodeURIComponent(topic) : undefined;
 
   return (
-    <div className="flex">
+    <>
       <SideMenu title="Topics" isInner>
         <TopicFilterSection activeTopic={activeTopic} />
       </SideMenu>
-
-      <div className="flex-1">{children}</div>
-    </div>
+      <div className="flex-1 lg:bg-dots">{children}</div>
+    </>
   );
 }

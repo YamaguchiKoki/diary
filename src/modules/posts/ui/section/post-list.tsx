@@ -1,4 +1,4 @@
-import { getPostsByYear } from "@/modules/notion/service/api";
+import { getPostsByYear } from "@/modules/posts/service/api";
 import { PostListView } from "@/modules/posts/ui/view/post-list";
 
 export type PostListSectionProps = {

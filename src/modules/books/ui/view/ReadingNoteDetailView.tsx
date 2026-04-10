@@ -4,9 +4,9 @@ import { routes } from "@/lib/routes";
 import type { ReadingNote } from "@/modules/books/types";
 import { BlocksRenderer } from "@/modules/notion/ui/view/BlocksRenderer";
 
-interface ReadingNoteDetailViewProps {
+type ReadingNoteDetailViewProps = {
   note: ReadingNote;
-}
+};
 
 export function ReadingNoteDetailView({ note }: ReadingNoteDetailViewProps) {
   return (

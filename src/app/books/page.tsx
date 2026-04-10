@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/layouts/ScrollArea";
 import { FloatingHeader } from "@/components/ui/FloatingHeader";
+import { getAllTopics } from "@/modules/books/service/api";
 import { TopicFilter } from "@/modules/books/ui/view/TopicFilter";
-import { getAllTopics } from "@/modules/notion/service/api";
 
 export default async function BooksPage() {
   const topics = await getAllTopics();

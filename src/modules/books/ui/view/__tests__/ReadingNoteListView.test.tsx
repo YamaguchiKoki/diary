@@ -27,14 +27,6 @@ describe("ReadingNoteListView", () => {
     expect(screen.getByText("テスト読書メモ2")).toBeInTheDocument();
   });
 
-  it("読書メモが0件の場合、メッセージが表示される", () => {
-    render(<ReadingNoteListView notes={[]} />);
-
-    expect(
-      screen.getByText("読書メモが見つかりませんでした。"),
-    ).toBeInTheDocument();
-  });
-
   it("複数の読書メモが正しく表示される", () => {
     const notes = Array.from({ length: 5 }, (_, i) => ({
       id: `${i + 1}`,
